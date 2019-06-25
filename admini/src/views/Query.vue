@@ -75,7 +75,7 @@ export default {
       ],
       // 已处理的订单
       doneData: [],
-      status:'',
+      refuseData:[],
     };
   },
   beforeMount() {
@@ -96,11 +96,18 @@ export default {
       ("eleToken")}}).then(res=>{
         // console.log(res.data.data);
         let data = res.data.data;
+        this.tableData = [];
+        this.doneData = [];
         for(let x of data) {
           if (x.status.orderStatus === 'CREATE') {
             this.tableData.push(x.order);
-            this.status=x.status.orderStatus;
-          } else this.doneData.push(x.order);
+            // console.log(this.status);
+          } else if(x.status.orderStatus === 'ACCEPT'){
+              this.doneData.push(x.order);
+          }else{
+            this.refuseData.push(x.order);
+          }
+          
         }
         // console.log(this.tableData.length);
       })
@@ -109,43 +116,23 @@ export default {
     handleEdit(index, row) {
       // console.log(index, row);
       var id=row.orderId;
-      // console.log(id);
-      this.$axios.put(`/api/handle/${id}`,this.status, {headers :{token:localStorage.getItem("eleToken")}}).then(res=>{
+      this.$axios.put(`/api/handle/${id}`, { status: "ACCEPT" }, {headers :{token:localStorage.getItem("eleToken")}}).then(res=>{
+        // let data = res.data.data;
         console.log(res);
+        this.getAllOrderInfo();
+        this.$message({
+            type: "success",
+            message: "訂單成立!"
+          });
       })
-      // 获取所有已处理订单
-      // this.$axios.get("/api/handle",{headers:{token:localStorage.getItem("eleToken")}}).then(res=>{
-      //   this.doneData = res.data.data;
-      //   console.log(res.data.data);
-      // })
-      // //   将数据push到已处理的订单中
-      // this.doneData.push(row);
-      // this.tableData.splice(index, 1);
-      // this.$message({
-      //   type: "success",
-      //   message: "订单成立!"
-      // });
+     
     },
     handleDelete(index, row) {
       console.log(index, row);
-      this.$confirm("此操作将永久删除该订单, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+       var id=row.orderId;
+      this.$axios.put(`/api/handle/${id}`,{ status: "REFUSE" },{headers :{token:localStorage.getItem("eleToken")}}).then(res=>{
       })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
-          this.tableData.splice(index, 1);
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
+      this.getAllOrderInfo();
     }
   }
 };
