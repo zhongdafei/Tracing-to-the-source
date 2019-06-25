@@ -72,62 +72,59 @@ export default {
     return {
       // 未处理的订单
       tableData: [
-        {
-          orderId: "2070ecd0f1a444f4ba4823ed9c38c8e2",
-          producibleId: "03439fffdf1c469ab7d3e69d05228c3b",
-          number: 30,
-          diameter: 30,
-          length: 30,
-          weight: 30,
-          createTime: "2019-06-18T03:21:08.000+0000",
-          updateTime: "2019-06-18T03:23:32.000+0000",
-          customerId: "ae9e6b3b17fa495597ad8881b528f6bc"
-        },
-        {
-          orderId: "c7507620eb2d4b1da900b8c8051752b3",
-          producibleId: "03439fffdf1c469ab7d3e69d05228c3b",
-          customerId: "ae9e6b3b17fa495597ad8881b528f6bc",
-          number: 20,
-          diameter: 10,
-          length: 10,
-          weight: 10,
-          createTime: "2019-06-18T03:21:38.000+0000",
-          updateTime: "2019-06-18T03:21:38.000+0000"
-        },
-        {
-          orderId: "c7507620eb2d4b1da900b8c8051752b3",
-          producibleId: "03439fffdf1c469ab7d3e69d05228c3b",
-          customerId: "ae9e6b3b17fa495597ad8881b528f6bc",
-          number: 20,
-          diameter: 10,
-          length: 10,
-          weight: 10,
-          createTime: "2019-06-18T03:21:38.000+0000",
-          updateTime: "2019-06-18T03:21:38.000+0000"
-        }
       ],
       // 已处理的订单
-      doneData: []
+      doneData: [],
+      status:'',
     };
   },
   beforeMount() {
     this.getAllOrderInfo();
+    this.getAllHandledInfo();
   },
   methods: {
+
+    // 获取所有已处理的订单信息
+    getAllHandledInfo(){
+      // this.$axios.get("/api/handle",{headers:{token:localStorage.getItem("eleToken")}}).then(res=>{
+      //   console.log(res);
+      // })
+    },
     // 获取所有订单信息
     getAllOrderInfo() {
-      
+      this.$axios.get("/api/order/admin",{headers:{"token":localStorage.getItem
+      ("eleToken")}}).then(res=>{
+        // console.log(res.data.data);
+        let data = res.data.data;
+        for(let x of data) {
+          if (x.status.orderStatus === 'CREATE') {
+            this.tableData.push(x.order);
+            this.status=x.status.orderStatus;
+          } else this.doneData.push(x.order);
+        }
+        // console.log(this.tableData.length);
+      })
     },
-
+    // 同意订单操作
     handleEdit(index, row) {
-      console.log(index, row);
-      //   将数据push到已处理的订单中
-      this.doneData.push(row);
-      this.tableData.splice(index, 1);
-      this.$message({
-        type: "success",
-        message: "订单成立!"
-      });
+      // console.log(index, row);
+      var id=row.orderId;
+      // console.log(id);
+      this.$axios.put(`/api/handle/${id}`,this.status, {headers :{token:localStorage.getItem("eleToken")}}).then(res=>{
+        console.log(res);
+      })
+      // 获取所有已处理订单
+      // this.$axios.get("/api/handle",{headers:{token:localStorage.getItem("eleToken")}}).then(res=>{
+      //   this.doneData = res.data.data;
+      //   console.log(res.data.data);
+      // })
+      // //   将数据push到已处理的订单中
+      // this.doneData.push(row);
+      // this.tableData.splice(index, 1);
+      // this.$message({
+      //   type: "success",
+      //   message: "订单成立!"
+      // });
     },
     handleDelete(index, row) {
       console.log(index, row);
@@ -157,7 +154,7 @@ export default {
 .up,
 .down {
   width: 100%;
-  height: 600px;
+  height: 100%;
   margin: 10px 10px;
 }
 .up {

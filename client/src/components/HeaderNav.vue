@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="userinfo">
-          <img src="http://www.gravatar.com/avatar/anything?s=200&d=mm" class="avatar" alt>
+          <img src="http://img3.imgtn.bdimg.com/it/u=1965352511,407045986&fm=26&gp=0.jpg" class="avatar" alt>
           <div class="welcome">
             <p class="name comenane">欢迎</p>
             <p class="name avatarname">
@@ -121,11 +121,6 @@ export default {
       cb(results);
     },
 
-
-
-
-
-
     createFilter(queryString) {
       return restaurant => {
         return (
@@ -137,13 +132,6 @@ export default {
     handleIconClick(ev) {
         console.log(ev);
       },
-
-
-
-
-
-
-      
     setDialogInfo(cmdItem) {
       //   console.log(cmdItem);
       switch (cmdItem) {

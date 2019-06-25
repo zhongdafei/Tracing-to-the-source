@@ -26,10 +26,7 @@
 
                 <el-dialog title="选项框" :visible.sync="dialogVisible"  width="30%">
                   <el-form :model="formLabelAlign">
-                    <el-form-item label="产品ID">
-                      <el-input v-model="formLabelAlign.producible_id" 
-                      ></el-input>
-                    </el-form-item>
+                    
                     <el-form-item label="选购数量">
                       <el-input v-model="formLabelAlign.number"></el-input>
                     </el-form-item>
@@ -89,34 +86,63 @@ export default {
     this.getCurrentUserOrder();
   },
   methods: {
+    // 時間轉換函數
+    changeTime(obj){
+          let date = new Date(obj);
+          let y = date.getFullYear();
+          let m = date.getMonth();
+          let d = date.getDate();
+          let h = date.getHours();
+          let f = date.getMinutes()>=10? date.getMinutes() : "0"+date.getMinutes();
+          let s = date.getSeconds()>=10? date.getSeconds() : "0"+date.getSeconds();
+          return (y+"-"+m+"-"+d +"  "+h+":"+f+":"+s);
+    },
+    // 獲取當前用戶的所有訂單
     getCurrentUserOrder() {
       this.$axios
         .get("/api/order", {
           headers: { token: localStorage.getItem("eleToken") }
         })
         .then(res => {
-          // console.log(res.data.data);
-          for (var i = 0; i < res.data.data.length; i++) {
-            this.items.push(res.data.data[i].handle);
-          }
+          console.log(res.data.data);
+          this.items=res.data.data.map(i=>{
+            if(i.status.orderStatus==="CREATE") {
+              // console.log(i)
+              // i.order.createTime = changeTime(i.order.createTime);
+             return i.order;
+              };
+            return null;
+          })
+          // for (var i = 0; i < res.data.data.length; i++) {
+          //   this.items.push(res.data.data[i].handle);
+          // }
           // console.log(this.items[0].handle);
         });
     },
     // 修改订单
-    submitForm(index, row) {
+    submitForm(index,row) {
       //立即创建
       // console.log(row);
       this.dialogVisible = false;
       var id1 = row.orderId;
+      this.formLabelAlign.producible_id=row.producibleId;
+      // console.log(row);
       this.$axios
-        .put(`/api/order/${id1}`, this.formLabelAlign, {
-          headers: { token: localStorage.getItem("eleToken") }
-        })
-        .then(res => {
-          console.log(res);
+      .put(`/api/order/${id1}`, this.formLabelAlign, {
+        headers: { token: localStorage.getItem("eleToken") }
+      })
+      .then(res => {
+        // console.log(res);
+        this.$message({
+          message: '恭喜你，修改成功',
+          type: 'success'
         });
+      this.formLabelAlign.number=this.formLabelAlign.diameter=this.formLabelAlign.length=this.formLabelAlign.weight="";
+      });
     },
-    resetForm() {}
+    resetForm() {
+      this.formLabelAlign.number=this.formLabelAlign.diameter=this.formLabelAlign.length=this.formLabelAlign.weight="";
+      }
   }
 };
 </script>

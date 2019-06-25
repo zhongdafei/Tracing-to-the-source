@@ -34,9 +34,9 @@
                     label-width="80px"
                     :model="formLabelAlign"
                   >
-                    <el-form-item label="产品ID">
+                    <!-- <el-form-item label="产品ID">
                       <el-input v-model="formLabelAlign.producible_id"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item label="选购数量">
                       <el-input v-model="formLabelAlign.number"></el-input>
                     </el-form-item>
@@ -50,7 +50,7 @@
                       <el-input v-model="formLabelAlign.weight"></el-input>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" @click="submitForm('ruleForm',item1)">提交</el-button>
+                      <el-button type="primary" @click="submitForm('ruleForm',item1, index)">提交</el-button>
                       <el-button @click="resetForm('ruleForm')">重置</el-button>
                     </el-form-item>
                   </el-form>
@@ -101,12 +101,13 @@ export default {
     // 加载所有可上架商品信息
     getAllProductList() {
       this.$axios.get("/api/producible").then(res => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         for (var i = 0; i < res.data.data.length; i++) {
           this.items.push(res.data.data[i]);
         }
       });
     },
+    // 加载商品信息
     info(index) {
       const h = this.$createElement;
       this.$msgbox({
@@ -121,15 +122,20 @@ export default {
         confirmButtonText: "确定"
       });
     },
-    
-    submitForm(formName, item) {
+    // 将表单提交
+    submitForm(formName, item, index) {
       //立即创建
       this.dialogVisible = false;
+      this.formLabelAlign.producible_id = this.items[index].producibleId;
       this.$axios
         .post("/api/order", this.formLabelAlign, {
           headers: { token: localStorage.getItem("eleToken") }
         })
         .then(res => {
+          this.$message({
+          message: '恭喜你，下单成功',
+          type: 'success'
+        });
           console.log(res);
         });
     },
@@ -140,10 +146,6 @@ export default {
       this.formLabelAlign.address = "";
       this.formLabelAlign.email = "";
     },
-    // 获取全部产品信息
-    getAllGoodsInfo(){
-      // this.$axios.
-    }
   }
 
 };

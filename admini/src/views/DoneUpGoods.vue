@@ -1,10 +1,14 @@
 <template>
   <div class="all">
     <div class="center">
+      <div class="otherspace"></div>
+      <div class="space">
+        <p>所有已上架商品信息</p>
+      </div>
       <el-table :data="tableData" style="width: 100%;">
-          <el-table-column label="序号" width="60">
+        <el-table-column label="序号" width="60">
           <template slot-scope="scope">
-            <span style="margin-left: 10px;" >
+            <span style="margin-left: 10px;">
               <p style="text-align: center;">{{ scope.$index+1 }}</p>
             </span>
           </template>
@@ -38,7 +42,11 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除该产品</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)"
+            >删除该产品</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -46,23 +54,23 @@
   </div>
 </template>
 <script>
-import { constants } from 'crypto';
+import { constants } from "crypto";
 export default {
   data() {
     return {
       tableData: [],
-       dialogFormVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-        formLabelWidth: '120px'
+      dialogFormVisible: false,
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
+      formLabelWidth: "120px"
     };
   },
   beforeMount() {
@@ -78,14 +86,34 @@ export default {
       });
     },
     // 删除产品信息
-   
+
     handleDelete(index, row) {
-    //   console.log(row);
-      var id=row.producibleId;
-      this.$axios.delete(`/api/producible/${id}`,{headers:{token:localStorage.getItem("eleToken")}}).then(res => {
+      //   console.log(row);
+      var id = row.producibleId;
+      this.$axios
+        .delete(`/api/producible/${id}`, {
+          headers: { token: localStorage.getItem("eleToken") }
+        })
+        .then(res => {
           console.log(res);
-          this.tableData.splice(index,1);
-      })    
+           this.$confirm('此操作将永久删除该商品信息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.tableData.splice(index, 1);
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+          
+        });
     }
   }
 };
@@ -96,17 +124,37 @@ export default {
   height: 100%;
   margin: 0px auto;
 }
+
 .all {
   width: 100%;
   height: 200%;
   margin-top: 0;
   background-color: rgb(223, 233, 221);
 }
-.el-table td,.el-table th {
-    text-align: center!important;
-    overflow: hidden;
+.otherspace {
+  width: 900px;
+  height: 30px;
+  background-color: rgb(223, 233, 221);
 }
-.el-button{
-    margin:12px!important;
+.space {
+  width: 900px;
+  height: 90px;
+  margin: 0 auto;
+  background-color: rgb(223, 233, 221);
+}
+.space p {
+  line-height: 50px;
+  font-weight: 700;
+  font-family: STFangsong;
+  text-align: center;
+  background-color: #fff;
+}
+.el-table td,
+.el-table th {
+  text-align: center !important;
+  overflow: hidden;
+}
+.el-button {
+  margin: 12px !important;
 }
 </style>

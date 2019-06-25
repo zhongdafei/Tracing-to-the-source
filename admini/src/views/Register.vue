@@ -39,6 +39,19 @@
 export default {
   name: "register",
   data() {
+     var checkPhone = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('手机号不能为空'));
+        } else {
+          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+          // console.log(reg.test(value));
+          if (reg.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入正确的手机号'));
+          }
+        }
+      };
     var validatePass2 = (rule, value, callback) => {
       if (value !== this.registerUser.password) {
         callback(new Error("两次输入密码不一致!"));
@@ -69,7 +82,7 @@ export default {
           }
         ],
         phone:[
-          { required: true, message: "电话不能为空", trigger: "blur" },
+          {validator: checkPhone, trigger: 'blur'},
         ],
         password: [
           { required: true, message: "密码不能为空", trigger: "blur" },

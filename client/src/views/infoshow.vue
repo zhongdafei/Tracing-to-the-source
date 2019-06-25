@@ -4,7 +4,11 @@
       <el-col :span="10">
         <el-page-header @back="goBack"></el-page-header>
         <div class="user">
-          <img src="http://www.gravatar.com/avatar/anything?s=200&d=mm" class="avatara" alt>
+          <img
+            src="http://img3.imgtn.bdimg.com/it/u=1965352511,407045986&fm=26&gp=0.jpg"
+            class="avatara"
+            alt
+          >
         </div>
       </el-col>
       <el-col :span="14">
@@ -12,17 +16,22 @@
           <el-button type="text" @click="dialogVisible = true" class="btn">修改信息</el-button>
 
           <el-dialog title="编辑资料" :visible.sync="dialogVisible" width="30%">
-            <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
-              <el-form-item label="名称">
+            <el-form 
+            :rules="rules" 
+            :label-position="labelPosition" 
+            ref="formLabelAlign"
+            label-width="80px" 
+            :model="formLabelAlign">
+              <el-form-item label="名称" prop="name">
                 <el-input v-model="formLabelAlign.name"></el-input>
               </el-form-item>
-              <el-form-item label="电话">
+              <el-form-item label="电话" prop="phone">
                 <el-input v-model="formLabelAlign.phone"></el-input>
               </el-form-item>
-              <el-form-item label="email">
+              <el-form-item label="email" prop="email">
                 <el-input v-model="formLabelAlign.email"></el-input>
               </el-form-item>
-              <el-form-item label="地址">
+              <el-form-item label="地址" prop="addr">
                 <el-input v-model="formLabelAlign.addr"></el-input>
               </el-form-item>
               <el-form-item>
@@ -33,23 +42,23 @@
           </el-dialog>
 
           <div class="user-item">
-            <i class="fa fa-user"></i>
+            <i class="fa fa-user"></i>&nbsp;&nbsp;
             <span>{{userName}}</span>
           </div>
           <div class="user-item">
-            <i class="fa fa-envelope"></i>
+            <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
             <span>{{userEmail}}</span>
           </div>
           <div class="user-item">
-            <i class="fa fa-mobile-phone"></i>
+            <i class="fa fa-mobile-phone"></i>&nbsp;&nbsp;
             <span>{{userPhone}}</span>
           </div>
           <div class="user-add">
-            <i class="fa fa-map-marker"></i>
+            <i class="fa fa-envelope"></i>&nbsp;&nbsp;
             <span>{{userAddr}}</span>
           </div>
           <div class="user-add">
-            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;
             <span>{{userCreateTime}}</span>
           </div>
         </div>
@@ -62,19 +71,52 @@
 export default {
   // name: "infoshow",
   data() {
+     var checkPhone = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('手机号不能为空'));
+        } else {
+          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+          console.log(reg.test(value));
+          if (reg.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入正确的手机号'));
+          }
+        }
+      };
     return {
       userName: "",
       userPhone: "",
       userAddr: "",
       userEmail: "",
       userCreateTime: "",
-      labelPosition: "right",
+      labelPosition: "top",
       dialogVisible: false,
       formLabelAlign: {
         name: "",
         phone: "",
         addr: "",
         email: ""
+      },
+      rules:{
+        name:[
+          { required: true, message: "用户名不能为空", trigger: "change" },
+          { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" }
+        ],
+         phone:[
+          {validator: checkPhone, trigger: 'blur'}
+        ],
+         email: [
+          {
+            type: "email",
+            required: true,
+            message: "邮箱格式不正确",
+            trigger: "blur"
+          }
+        ],
+         addr:[
+          { required: true, message: "地址不能为空", trigger: "blur" },
+        ],
       },
       formLabelWidth: "120px"
     };
@@ -100,7 +142,21 @@ export default {
           this.userPhone = res.data.data.phone;
           this.userEmail = res.data.data.email;
           this.userAddr = res.data.data.addr;
-          this.userCreateTime = res.data.data.createTime;
+          let date = new Date(res.data.data.createTime);
+          let y = date.getFullYear();
+          let m = date.getMonth();
+          let d = date.getDate();
+          let h = date.getHours();
+          let f =
+            date.getMinutes() >= 10
+              ? date.getMinutes()
+              : "0" + date.getMinutes();
+          let s =
+            date.getSeconds() >= 10
+              ? date.getSeconds()
+              : "0" + date.getSeconds();
+          this.userCreateTime =
+            y + "-" + m + "-" + d + "  " + h + ":" + f + ":" + s;
         });
     },
     // 退出
@@ -118,6 +174,8 @@ export default {
         .then(res => {
           console.log(res.data.data);
           if (res.data.code == 200) {
+            this.formLabelAlign.name = this.formLabelAlign.phone = this.formLabelAlign.email = this.formLabelAlign.addr =
+              "";
             this.$message({
               message: res.data.msg,
               type: "success"
@@ -140,8 +198,9 @@ export default {
 
       this.formLabelAlign.name = "";
       this.formLabelAlign.phone = "";
-      this.formLabelAlign.address = "";
+      this.formLabelAlign.addr = "";
       this.formLabelAlign.email = "";
+
       // this.$refs[formName].resetFields();
     }
   }
@@ -162,10 +221,10 @@ export default {
 .user {
   text-align: center;
   position: relative;
-  top: 30%;
+  top: 20%;
 }
 .user img {
-  width: 150px;
+  width: 300px;
   border-radius: 50%;
 }
 .user span {

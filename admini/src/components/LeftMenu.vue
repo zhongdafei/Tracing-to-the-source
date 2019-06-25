@@ -52,10 +52,17 @@ export default {
           children: [
             { path: "addinfo", name: "信息录入" },
             { path: "queryallinfo", name: "查看全部员工信息" },
+          ]
+        },
+          {
+          icon: "fa-plus-square-o",
+          name: "生产管理",
+          path: "create",
+          children: [
             { path: "addgoods", name: "生成产品列表" },
             { path: "doneupgoods", name: "已上架产品列表" },
-          ]
-        }
+            ]
+        },
       ]
     };
   }

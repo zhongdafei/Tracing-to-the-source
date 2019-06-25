@@ -30,7 +30,6 @@
         <el-form-item>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-          
         </el-form-item>
       </el-form>
     </div>
@@ -41,8 +40,20 @@
 <script>
 export default {
   data() {
+     var checkPhone = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('手机号不能为空'));
+        } else {
+          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+          // console.log(reg.test(value));
+          if (reg.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入正确的手机号'));
+          }
+        }
+      };
     return {
-     
       ruleForm: {
         name: "",
         phone: "",
@@ -54,7 +65,7 @@ export default {
           { required: true, message: "用户名不能为空", trigger: "change" },
           { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" }
         ],
-        phone: [{ required: true, message: "电话不能为空", trigger: "change" }],
+        phone: [{validator: checkPhone, trigger: 'blur'}],
         department: [
           { required: true, message: "部门不能为空", trigger: "change" }
         ],
@@ -66,19 +77,26 @@ export default {
     };
   },
   methods: {
-    resetForm(Form){
-      this.ruleForm.name=
-      this.ruleForm.phone=
-      this.ruleForm.department=
-      this.ruleForm.post="";
+    resetForm(Form) {
+      this.ruleForm.name = this.ruleForm.phone = this.ruleForm.department = this.ruleForm.post =
+        "";
     },
-    submitForm(Form){
-      this.$axios.post("/api/worker",this.ruleForm,{headers:{token:localStorage.getItem("eleToken")}}).then(res=>{
-        console.log(res);
-      })
+    submitForm(Form) {
+      this.$axios
+        .post("/api/worker", this.ruleForm, {
+          headers: { token: localStorage.getItem("eleToken") }
+        })
+        .then(res => {
+          this.$message({
+            message: "恭喜你，加入成功",
+            type: "success"
+          });
+          this.ruleForm.name = this.ruleForm.phone = this.ruleForm.department = this.ruleForm.post =
+            "";
+        });
     }
   }
-}
+};
 </script>
 <style scoped>
 * {
