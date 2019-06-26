@@ -1,12 +1,20 @@
 <template>
   <div class="order">
     <div class="maininfo">
+      <div style="margin-top: 15px;">
+        <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
+          <el-select v-model="select" slot="prepend" placeholder="请选择">
+            <el-option label="订单号" value="1"></el-option>
+          </el-select>
+          <el-button slot="append" icon="el-icon-search" @click="lookup"></el-button>
+        </el-input>
+      </div>
       <el-table :data="items" style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="商品数量">
-                  <span>{{ props.row.number }}</span>
+                <span>{{ props.row.number }}</span>
               </el-form-item>
               <el-form-item label="商品直径">
                 <span>{{ props.row.diameter }}</span>
@@ -24,9 +32,8 @@
               <el-form-item label="操作">
                 <el-button size="mini" @click="dialogVisible=true" type="success">修改订单</el-button>
 
-                <el-dialog title="选项框" :visible.sync="dialogVisible"  width="30%">
+                <el-dialog title="选项框" :visible.sync="dialogVisible" width="30%">
                   <el-form :model="formLabelAlign">
-                    
                     <el-form-item label="选购数量">
                       <el-input v-model="formLabelAlign.number"></el-input>
                     </el-form-item>
@@ -76,9 +83,13 @@ export default {
         weight: "",
         producible_id: ""
       },
-      
+
       // 存放所有订单的所有信息
-      items: []
+      items: [],
+
+      // 输入框
+      input3: "",
+      select: ""
     };
   },
   computer: {},
@@ -86,16 +97,38 @@ export default {
     this.getCurrentUserOrder();
   },
   methods: {
+    // 按ID寻找指定商品生产过程数据
+    lookup() {
+      let id = this.input3;
+      this.$axios.get(`/api/product/${id}`).then(res => {
+        console.log(res);
+        if (res.data.code === 200) {
+          const h = this.$createElement;
+          this.$msgbox({
+            title: "消息",
+            message: h("p", null, [
+              h("span", null, "内容可以是 "),
+              h("i", { style: "color: teal" }, "VNode")
+            ]),
+            showCancelButton: false,
+            confirmButtonText: "关闭",
+          })
+        }
+      });
+    },
+
     // 時間轉換函數
-    changeTime(obj){
-          let date = new Date(obj);
-          let y = date.getFullYear();
-          let m = date.getMonth();
-          let d = date.getDate();
-          let h = date.getHours();
-          let f = date.getMinutes()>=10? date.getMinutes() : "0"+date.getMinutes();
-          let s = date.getSeconds()>=10? date.getSeconds() : "0"+date.getSeconds();
-          return (y+"-"+m+"-"+d +"  "+h+":"+f+":"+s);
+    changeTime(obj) {
+      let date = new Date(obj);
+      let y = date.getFullYear();
+      let m = date.getMonth();
+      let d = date.getDate();
+      let h = date.getHours();
+      let f =
+        date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes();
+      let s =
+        date.getSeconds() >= 10 ? date.getSeconds() : "0" + date.getSeconds();
+      return y + "-" + m + "-" + d + "  " + h + ":" + f + ":" + s;
     },
     // 獲取當前用戶的所有訂單
     getCurrentUserOrder() {
@@ -104,55 +137,52 @@ export default {
           headers: { token: localStorage.getItem("eleToken") }
         })
         .then(res => {
-          console.log(res.data.data);
-          this.items=res.data.data.map(i=>{
-            if(i.status.orderStatus==="CREATE") {
-              // console.log(i)
-              // i.order.createTime = changeTime(i.order.createTime);
-             return i.order;
-              };
+          // console.log(res.data.data);
+          this.items = res.data.data.map(i => {
+            if (i.status.orderStatus === "CREATE") {
+              // console.log(i)eateTime);
+              return i.order;
+            }
             return null;
-          })
-          // for (var i = 0; i < res.data.data.length; i++) {
-          //   this.items.push(res.data.data[i].handle);
-          // }
-          // console.log(this.items[0].handle);
+          });
         });
     },
     // 修改订单
-    submitForm(index,row) {
+    submitForm(index, row) {
       //立即创建
       // console.log(row);
       this.dialogVisible = false;
       var id1 = row.orderId;
-      this.formLabelAlign.producible_id=row.producibleId;
+      this.formLabelAlign.producible_id = row.producibleId;
       // console.log(row);
       this.$axios
-      .put(`/api/order/${id1}`, this.formLabelAlign, {
-        headers: { token: localStorage.getItem("eleToken") }
-      })
-      .then(res => {
-        // console.log(res);
-        this.$message({
-          message: '恭喜你，修改成功',
-          type: 'success'
+        .put(`/api/order/${id1}`, this.formLabelAlign, {
+          headers: { token: localStorage.getItem("eleToken") }
+        })
+        .then(res => {
+          // console.log(res);
+          this.$message({
+            message: "恭喜你，修改成功",
+            type: "success"
+          });
+          this.formLabelAlign.number = this.formLabelAlign.diameter = this.formLabelAlign.length = this.formLabelAlign.weight =
+            "";
         });
-      this.formLabelAlign.number=this.formLabelAlign.diameter=this.formLabelAlign.length=this.formLabelAlign.weight="";
-      });
     },
     resetForm() {
-      this.formLabelAlign.number=this.formLabelAlign.diameter=this.formLabelAlign.length=this.formLabelAlign.weight="";
-      }
+      this.formLabelAlign.number = this.formLabelAlign.diameter = this.formLabelAlign.length = this.formLabelAlign.weight =
+        "";
+    }
   }
 };
 </script>
 
 <style scoped>
 .order {
-  width: 990px;
+  width: 1030px;
   height: 100%;
   margin: 20px auto;
-  /* background-color: pink; */
+  background-color: rgb(223, 233, 221);
 }
 .fistgood {
   height: 300px;
@@ -192,5 +222,16 @@ export default {
 }
 .el-dialog .el-button {
   margin-top: 40px;
+}
+/* 输入框  */
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+.el-input-group {
+  margin-top: 30px;
+  border-bottom: 40px solid rgb(223, 233, 221);
 }
 </style>

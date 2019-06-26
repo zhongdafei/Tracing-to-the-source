@@ -5,18 +5,18 @@
         <img src="../assets/logo.png" class="logo" alt>
         <span class="title"><router-link to="/home"> 生产过程跟踪及产品溯源系统</router-link></span>
       </el-col>
-      <el-col :span="14" class="user">
+      <el-col :span="10" class="user">
         <div class="container">
           <div class="he_nav">
             <ul>
-              <el-autocomplete
+              <!-- <el-autocomplete
                 popper-class="my-autocomplete"
                 v-model="state"
                 :fetch-suggestions="querySearch"
                 placeholder="请输入产品编号"
               >
                 <i class="el-icon-edit el-input__icon" slot="suffix" @click="handleIconClick"></i>
-              </el-autocomplete>
+              </el-autocomplete> -->
              
               <li>
                 <i class="fa fa-phone-square" aria-hidden="true"></i>

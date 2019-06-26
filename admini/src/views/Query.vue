@@ -118,7 +118,7 @@ export default {
       var id=row.orderId;
       this.$axios.put(`/api/handle/${id}`, { status: "ACCEPT" }, {headers :{token:localStorage.getItem("eleToken")}}).then(res=>{
         // let data = res.data.data;
-        console.log(res);
+        // console.log(res);
         this.getAllOrderInfo();
         this.$message({
             type: "success",

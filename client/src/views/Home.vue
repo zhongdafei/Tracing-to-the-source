@@ -158,7 +158,7 @@ export default {
 }
 .container {
   width: 100%;
-  height: 100%;
+  height: 300%;
   box-sizing: border-box;
 }
 /* 轮播图 */
