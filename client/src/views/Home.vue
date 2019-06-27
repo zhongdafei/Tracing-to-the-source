@@ -17,8 +17,8 @@
               <img :src="item1.image" alt>
             </div>
             <h3>{{item1.name}}</h3>
-           <p>{{item1.producibleDesc}}</p>
-            
+            <p>{{item1.producibleDesc}}</p>
+
             <div class="btn">
               <!-- 查看信息 -->
               <el-button type="info" icon="el-icon-info" circle @click="info(index)"></el-button>
@@ -36,7 +36,7 @@
                   >
                     <!-- <el-form-item label="产品ID">
                       <el-input v-model="formLabelAlign.producible_id"></el-input>
-                    </el-form-item> -->
+                    </el-form-item>-->
                     <el-form-item label="选购数量">
                       <el-input v-model="formLabelAlign.number"></el-input>
                     </el-form-item>
@@ -132,22 +132,21 @@ export default {
           headers: { token: localStorage.getItem("eleToken") }
         })
         .then(res => {
+          this.formLabelAlign.number = this.formLabelAlign.diameter = this.formLabelAlign.length = this.formLabelAlign.weight =
+            "";
           this.$message({
-          message: '恭喜你，下单成功',
-          type: 'success'
-        });
-          console.log(res);
+            message: "恭喜你，下单成功",
+            type: "success"
+          });
+          // console.log(res);
         });
     },
     resetForm(formName) {
       //重置
-      this.formLabelAlign.name = "";
-      this.formLabelAlign.phone = "";
-      this.formLabelAlign.address = "";
-      this.formLabelAlign.email = "";
-    },
+      
+       this.formLabelAlign.number = this.formLabelAlign.diameter = this.formLabelAlign.length = this.formLabelAlign.weight ="";
+    }
   }
-
 };
 </script>
 
@@ -158,7 +157,7 @@ export default {
 }
 .container {
   width: 100%;
-  height: 300%;
+  height: 100%;
   box-sizing: border-box;
 }
 /* 轮播图 */
@@ -174,10 +173,9 @@ export default {
   line-height: 300px;
   margin: 0;
 }
-.el-carousel__item p{
+.el-carousel__item p {
   display: inline-block;
   overflow: hidden;
-  
 }
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;

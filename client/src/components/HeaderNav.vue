@@ -1,7 +1,7 @@
 <template>
   <header class="head-nav">
     <el-row>
-      <el-col :span="6" class="logo-container">
+      <el-col :span="7" class="logo-container">
         <img src="../assets/logo.png" class="logo" alt>
         <span class="title"><router-link to="/home"> 生产过程跟踪及产品溯源系统</router-link></span>
       </el-col>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="userinfo">
-          <img src="http://img3.imgtn.bdimg.com/it/u=1965352511,407045986&fm=26&gp=0.jpg" class="avatar" alt>
+          <img src="../assets/頭像.jpeg" class="avatar" alt>
           <div class="welcome">
             <p class="name comenane">欢迎</p>
             <p class="name avatarname">
@@ -205,7 +205,7 @@ export default {
 .logo {
   height: 50px;
   width: 50px;
-  margin-right: 5px;
+  margin:0 15px;
   vertical-align: middle;
   display: inline-block;
 }

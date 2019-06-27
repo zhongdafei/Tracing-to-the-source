@@ -4,11 +4,7 @@
       <el-col :span="10">
         <el-page-header @back="goBack"></el-page-header>
         <div class="user">
-          <img
-            src="http://img3.imgtn.bdimg.com/it/u=1965352511,407045986&fm=26&gp=0.jpg"
-            class="avatara"
-            alt
-          >
+          <img src="../assets/頭像.jpeg" class="avatara" alt>
         </div>
       </el-col>
       <el-col :span="14">
@@ -16,12 +12,13 @@
           <el-button type="text" @click="dialogVisible = true" class="btn">修改信息</el-button>
 
           <el-dialog title="编辑资料" :visible.sync="dialogVisible" width="30%">
-            <el-form 
-            :rules="rules" 
-            :label-position="labelPosition" 
-            ref="formLabelAlign"
-            label-width="80px" 
-            :model="formLabelAlign">
+            <el-form
+              :rules="rules"
+              :label-position="labelPosition"
+              ref="formLabelAlign"
+              label-width="80px"
+              :model="formLabelAlign"
+            >
               <el-form-item label="名称" prop="name">
                 <el-input v-model="formLabelAlign.name"></el-input>
               </el-form-item>
@@ -71,19 +68,19 @@
 export default {
   // name: "infoshow",
   data() {
-     var checkPhone = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('手机号不能为空'));
+    var checkPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("手机号不能为空"));
+      } else {
+        const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+        console.log(reg.test(value));
+        if (reg.test(value)) {
+          callback();
         } else {
-          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-          console.log(reg.test(value));
-          if (reg.test(value)) {
-            callback();
-          } else {
-            return callback(new Error('请输入正确的手机号'));
-          }
+          return callback(new Error("请输入正确的手机号"));
         }
-      };
+      }
+    };
     return {
       userName: "",
       userPhone: "",
@@ -98,15 +95,13 @@ export default {
         addr: "",
         email: ""
       },
-      rules:{
-        name:[
+      rules: {
+        name: [
           { required: true, message: "用户名不能为空", trigger: "change" },
           { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" }
         ],
-         phone:[
-          {validator: checkPhone, trigger: 'blur'}
-        ],
-         email: [
+        phone: [{ validator: checkPhone, trigger: "blur" }],
+        email: [
           {
             type: "email",
             required: true,
@@ -114,9 +109,7 @@ export default {
             trigger: "blur"
           }
         ],
-         addr:[
-          { required: true, message: "地址不能为空", trigger: "blur" },
-        ],
+        addr: [{ required: true, message: "地址不能为空", trigger: "blur" }]
       },
       formLabelWidth: "120px"
     };
@@ -180,11 +173,7 @@ export default {
               message: res.data.msg,
               type: "success"
             });
-            // 清空
-            // this.formLabelAlign.name = "";
-            // this.formLabelAlign.phone = "";
-            // this.formLabelAlign.address = "";
-            // this.formLabelAlign.email = "";
+            this.getUserInfo();
           } else {
             this.$message({
               message: res.data.msg,

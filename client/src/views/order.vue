@@ -167,6 +167,7 @@ export default {
           });
           this.formLabelAlign.number = this.formLabelAlign.diameter = this.formLabelAlign.length = this.formLabelAlign.weight =
             "";
+            this.getCurrentUserOrder();
         });
     },
     resetForm() {
@@ -184,26 +185,10 @@ export default {
   margin: 20px auto;
   background-color: rgb(223, 233, 221);
 }
-.fistgood {
-  height: 300px;
-  background-color: #fff4e8;
-  border-top: 1px solid #f1f1f1;
-  position: relative;
-  margin-bottom: 10px;
-}
-
 /* 图片信息 */
 .maininfo {
   width: 948px;
-  height: 108px;
   margin-left: 42px;
-}
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
 }
 .demo-table-expand .el-form-item {
   margin-right: 0;
@@ -214,9 +199,6 @@ export default {
   margin-right: 15px;
   margin-left: 15px;
 }
-/* .el-dialog .el-form-item{
-  display: block;
-} */
 .el-input__inner {
   width: 400px !important;
 }

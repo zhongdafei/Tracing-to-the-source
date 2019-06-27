@@ -92,10 +92,10 @@ export default {
           message: '恭喜你，添加成功',
           type: 'success'
         });
-        this.name=
-        this.desc=
-        this.type=
-        this.image="";
+        this.form.name=
+        this.form.desc=
+        this.form.type=
+        this.form.image="";
     }
   }
 };
@@ -108,7 +108,7 @@ export default {
 }
 .farm {
   width: 700px;
-  height: 100%;
+  height: 93%;
   margin: 20px auto;
   background-color: rgb(223, 233, 221);
 }

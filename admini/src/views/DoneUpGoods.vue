@@ -5,7 +5,7 @@
       <div class="space">
         <p>所有已上架商品信息</p>
       </div>
-      <el-table :data="tableData" style="width: 100%;">
+      <el-table :data="tableData">
         <el-table-column label="序号" width="60">
           <template slot-scope="scope">
             <span style="margin-left: 10px;">
@@ -118,7 +118,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .center {
   width: 900px;
   height: 100%;
@@ -127,7 +127,7 @@ export default {
 
 .all {
   width: 100%;
-  height: 200%;
+  height: 210%;
   margin-top: 0;
   background-color: rgb(223, 233, 221);
 }

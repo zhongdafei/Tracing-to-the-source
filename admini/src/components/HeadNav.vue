@@ -1,14 +1,15 @@
 <template>
   <header class="head-nav">
     <el-row>
-      <el-col :span="6" class="logo-container">
+      <el-col :span="7" class="logo-container">
         <img src="../assets/logo.png" class="logo" alt>
-        <span class="title">生产过程跟踪及产品溯源系统</span>
+        <span class="title">
+          <router-link to="/query">生产过程跟踪及产品溯源系统</router-link> </span>
       </el-col>
 
       <el-col :span="3" class="user">
         <div class="userinfo">
-          <img src="http://img3.imgtn.bdimg.com/it/u=1965352511,407045986&fm=26&gp=0.jpg" class="avatar" alt>
+          <img src="../assets/頭像.jpeg" class="avatar" alt>
           <div class="welcome">
             <p class="name comename">欢迎</p>
             <p class="name avatarname">{{adminName}}</p>
@@ -119,13 +120,13 @@ export default {
   border-bottom: 1px solid #1f2d3d;
 }
 .logo-container {
-  line-height: 60px;
+  line-height: 65px;
   min-width: 400px;
 }
 .logo {
   height: 50px;
   width: 50px;
-  margin-right: 5px;
+  margin: 0 15px;
   vertical-align: middle;
   display: inline-block;
 }

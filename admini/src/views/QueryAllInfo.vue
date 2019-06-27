@@ -139,15 +139,6 @@ export default {
       this.$refs[formName].resetFields();
     },
 
-    // // 修改员工信息、
-    // resetRow(index,rows){
-    //   console.log(rows[index]);
-    //   // let id =
-    //   // this.$axios.put(`/api/worker/${id}`,{headers:{token:localStorage.getItem("eleToken")}}).then(res=>{
-    //   //   console.log(res);
-    //   // })
-    // },
-
     // 删除员工信息
     handleDelete(index, rows) {
       var id = rows.workerId;
@@ -196,7 +187,7 @@ export default {
 <style scope>
 .all {
   width: 100%;
-  height: 200%;
+  height: 100%;
   margin-top: 0;
   position: relative;
   background-color: rgb(223, 233, 221);
@@ -222,9 +213,12 @@ export default {
 .w {
   width: 900px;
   margin: 0 auto;
-  height: 900px;
+  height: 100%;
   background-color: rgb(223, 233, 221);
   /* position: absolute;
     top:10px; */
+}
+.el-table__row .el-button{
+  margin:0 3px;
 }
 </style>

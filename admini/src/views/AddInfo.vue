@@ -105,7 +105,7 @@ export default {
 }
 .farm {
   width: 700px;
-  height: 100%;
+  height: 95%;
   margin: 10px auto;
   background-color: rgb(223, 233, 221);
 }
@@ -117,11 +117,12 @@ export default {
 }
 .w {
   width: 300px;
-  height: 400px;
+  height: 100%;
   background-color: #fff;
 }
 .biaoge {
   padding: 10px 30px;
+  height: 100%;
   box-sizing: border-box;
 }
 .farm > div {

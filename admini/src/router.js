@@ -4,7 +4,7 @@ import Index from './views/Index.vue'
 import Register from './views/Register'
 import Nofind from './views/404'
 import Login from './views/Login'
-import Home from './views/Home'
+// import Home from './views/Home'
 import InfoShow from './views/InfoShow'
 import AddInfo from './views/AddInfo'
 import AddGoods from './views/AddGoods'
@@ -25,7 +25,7 @@ const router = new Router({
     },
     {
       path: '/',
-      redirect: '/index'
+      redirect: '/login'
     },
     {
       path: '/register',
@@ -44,12 +44,7 @@ const router = new Router({
       children: [
         {
           path: '',
-          component: Home
-        },
-        {
-          path: '/home',
-          name: 'home',
-          component: Home
+          component: Query
         },
         {
           path: '/infoshow',

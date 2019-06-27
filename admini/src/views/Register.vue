@@ -134,7 +134,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background: url(../assets/tieta.jpg) no-repeat center center;
+  background: url(../assets/adminbg0.jpg) no-repeat center center;
   background-size: 100% 100%;
 }
 .form_container {
@@ -161,7 +161,7 @@ export default {
   text-shadow: 2px 2px 1px #ccc;
   font-weight: 900;
   font-size: 26px;
-  color: #fff;
+  color: purple;
 }
 .registerForm {
   margin-top: 20px;

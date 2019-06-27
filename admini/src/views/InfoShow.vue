@@ -4,11 +4,7 @@
       <el-col :span="10">
         <el-page-header @back="goBack"></el-page-header>
         <div class="user">
-          <img
-            src="http://img3.imgtn.bdimg.com/it/u=1965352511,407045986&fm=26&gp=0.jpg"
-            class="avatara"
-            alt
-          >
+          <img src="../assets/頭像.jpeg" class="avatara" alt>
         </div>
       </el-col>
       <el-col :span="14">
@@ -68,19 +64,19 @@
 export default {
   // name: "infoshow",
   data() {
-     var checkPhone = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('手机号不能为空'));
+    var checkPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("手机号不能为空"));
+      } else {
+        const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+        // console.log(reg.test(value));
+        if (reg.test(value)) {
+          callback();
         } else {
-          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-          // console.log(reg.test(value));
-          if (reg.test(value)) {
-            callback();
-          } else {
-            return callback(new Error('请输入正确的手机号'));
-          }
+          return callback(new Error("请输入正确的手机号"));
         }
-      };
+      }
+    };
     return {
       userName: "",
       userPhone: "",
@@ -95,27 +91,24 @@ export default {
         email: ""
       },
       formLabelWidth: "120px",
-       rules: {
-    name: [
-      { required: true, message: "用户名不能为空", trigger: "change" },
-      { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" }
-    ],
-    phone: [
-      {validator: checkPhone, trigger: 'blur'},
-    ],
-    email: [
-      {
-        type: "email",
-        required: true,
-        message: "邮箱格式不正确",
-        trigger: "blur"
+      rules: {
+        name: [
+          { required: true, message: "用户名不能为空", trigger: "change" },
+          { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" }
+        ],
+        phone: [{ validator: checkPhone, trigger: "blur" }],
+        email: [
+          {
+            type: "email",
+            required: true,
+            message: "邮箱格式不正确",
+            trigger: "blur"
+          }
+        ]
       }
-    ]
-  },
     };
-
   },
- 
+
   computed: {
     user() {
       return this.$store.getters.user;
@@ -154,11 +147,7 @@ export default {
           // console.log(d);
         });
     },
-    // 时间格式化
 
-    // crtTimeFtt(row, index) {
-    //   return top.dateFtt("yyyy-MM-dd hh:mm:ss", crtTime); //直接调用公共JS里面的时间类处理的办法
-    // },
     // 退出
     goBack() {
       this.$router.push("/home");
@@ -183,6 +172,7 @@ export default {
             this.formLabelAlign.phone = "";
             this.formLabelAlign.address = "";
             this.formLabelAlign.email = "";
+            this.getUserInfo();
           } else {
             this.$message({
               message: res.data.msg,
