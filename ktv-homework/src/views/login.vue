@@ -1,80 +1,66 @@
 <template>
   <div class="login">
-    <div class="title"></div>
-    <div class="login-form">
+    <section class="form_container">
+      <div class="manage_tip">
+        <span class="title">ktv管理系统</span>
+      </div>
+
       <el-form
-        :model="ruleForm"
-        status-icon
+        :model="loginUser"
         :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
+        class="loginForm"
+        ref="loginForm"
+        label-width="80px"
       >
-        <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+        <el-form-item label="用户名" prop="name">
+          <el-input v-model="loginUser.name" placeholder="请输入用户名"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="loginUser.password" placeholder="请输入密码" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="年龄" prop="age">
-          <el-input v-model.number="ruleForm.age"></el-input>
-        </el-form-item>
+
+       
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')">登入</el-button>
         </el-form-item>
+        <div class="tiparea">
+          <p>
+            还没有账号？现在
+            <router-link to="/register">注册</router-link>
+          </p>
+        </div>
       </el-form>
-    </div>
+    </section>
   </div>
 </template>
+
 <script>
+// 解析token
+import jwt_decode from "jwt-decode";
+
 export default {
+  name: "login",
+  components: {},
   data() {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("年龄不能为空"));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("请输入数字值"));
-        } else {
-          if (value < 18) {
-            callback(new Error("必须年满18岁"));
-          } else {
-            callback();
-          }
-        }
-      }, 1000);
-    };
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
-        }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
-    };
     return {
-      ruleForm: {
-        pass: "",
-        checkPass: "",
-        age: ""
+      loginUser: {
+        name: "",
+        password: ""
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        age: [{ validator: checkAge, trigger: "blur" }]
+        name: [
+          {
+            type: "",
+            required: true,
+            message: "用户名格式不正确",
+            trigger: "blur"
+          }
+        ],
+        password: [
+          { required: true, message: "密码不能为空", trigger: "blur" },
+          { min: 3, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
+        ]
       }
     };
   },
@@ -82,18 +68,89 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
+          this.$axios.post("/api/account", this.loginUser).then(res => {
+            console.log(res)
+            if (res.data.code > 300) {
+              this.$message({
+                message: res.data.msg,
+                type: "error"
+              });
+            } else {
+              const { token } = res.data.data;
+              // 存储到ls
+              localStorage.setItem("eleToken", token);
+              this.$router.push("/index");
+            }
+            //   console.log(res)
+            // token
+
+            // 解析token
+            // const decode=jwt_decode(token);
+            // console.log(decode);
+            // token存储到vuex中
+            // this.$store.dispatch("setAuthenticated",!this.isEmpty(decode));
+            // this.$store.dispatch("setUser",decode);
+          });
         }
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    isEmpty(value) {
+      return (
+        value === undefined ||
+        value === null ||
+        (typeof value === "object" && Object.keys(value).length === 0) ||
+        (typeof value === "string" && value.trim().length === 0)
+      );
     }
   }
 };
 </script>
-<style>
+
+<style scoped>
+.login {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url(../assets/蓝紫色bgc.jpg) no-repeat center center;
+  background-size: 100% 100%;
+}
+.form_container {
+  width: 370px;
+  height: 210px;
+  position: absolute;
+  top: 20%;
+  left: 34%;
+  padding: 25px;
+  border-radius: 5px;
+  text-align: center;
+}
+.form_container .manage_tip .title {
+  font-family: "Times New Roman", Times, serif;
+  text-shadow: 2px 2px 1px #ccc;
+  font-weight: bold;
+  font-size: 26px;
+  color: #fff;
+  letter-spacing: 6px;
+}
+.loginForm {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px 40px 20px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px #cccc;
+}
+
+.submit_btn {
+  width: 100%;
+}
+.tiparea {
+  text-align: right;
+  font-size: 12px;
+  color: #333;
+}
+.tiparea p a {
+  color: #409eff;
+}
 </style>
+
+

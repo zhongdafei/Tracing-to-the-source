@@ -5,7 +5,7 @@
         <img src="../assets/logo.png" class="logo" alt>
         <span class="title"><router-link to="/home"> 生产过程跟踪及产品溯源系统</router-link></span>
       </el-col>
-      <el-col :span="10" class="user">
+      <el-col :span="11" class="user">
         <div class="container">
           <div class="he_nav">
             <ul>
@@ -32,7 +32,7 @@
              
               <li>
                 <i class="fa fa-qrcode" aria-hidden="true"></i>
-                <a href="#">下载App</a>
+                <a href="#" @click="download">下载App</a>
               </li>
               <li>
                 <a href="javascript:0;">
@@ -181,6 +181,11 @@ export default {
         this.userName = res.data.data.name;
         
       })
+    },
+    // 下载APP
+    download(){
+      window.location.href="http://119.23.243.252:8080/api/download/origins"
+      
     }
   }
 };

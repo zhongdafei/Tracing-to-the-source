@@ -39,21 +39,11 @@ var router = new Router({
           name: 'infoshow',
           component: Infoshow
         },
-        // {
-        //   path: '/fundlist',
-        //   name: 'fundlist',
-        //   component: FundList
-        // },
         {
           path: '/order',
           name: 'order',
           component: Order
         },
-        // {
-        //   path: '/shopcar',
-        //   name: 'shopcar',
-        //   component: ShopCar
-        // },
       ]
     },
     {
