@@ -1,51 +1,44 @@
 <template>
+<div class="zhanwei">
   <header class="head-nav">
     <el-row>
       <el-col :span="7" class="logo-container">
-        <img src="" class="logo" alt>
-        <span class="title"><router-link to="/home"> 生产过程跟踪及产品溯源系统</router-link></span>
+        <img src="../assets/logo3.png" class="logo" alt />
+        <span class="title">
+          <router-link to="/home">ktv管理系统</router-link>
+        </span>
       </el-col>
-      <el-col :span="12" class="user">
+      <el-col :span="6" class="user">
         <div class="container">
           <div class="he_nav">
             <ul>
-             
-              <li>
-                <i class="fa fa-phone-square" aria-hidden="true"></i>
-                <el-popover placement="top" width="700" trigger="click">
-                  <el-table :data="gridData">
-                    <el-table-column width="150" property="tel" label="联系电话"></el-table-column>
-                    <el-table-column width="200" property="email" label="电子邮箱"></el-table-column>
-                    <el-table-column width="350" property="address" label="公司地址"></el-table-column>
-                  </el-table>
-                  <el-button type="text" slot="reference">联系我们</el-button>
-                </el-popover>
-              </li>
-             
-              <li>
-                <i class="fa fa-qrcode" aria-hidden="true"></i>
-                <a href="#" @click="download">下载App</a>
-              </li>
               <li>
                 <a href="javascript:0;">
                   <router-link to="/register">
-                  <i class="fa fa-registered" aria-hidden="true"></i>
-                  注册&nbsp;&nbsp;&nbsp;/</router-link>
-                  <router-link to="/login"> &nbsp;
-                  <i class="fa fa-sign-in" aria-hidden="true"></i>
-                  登入</router-link>
+                    <i class="fa fa-registered" aria-hidden="true"></i>
+                    注册&nbsp;&nbsp;&nbsp;/
+                  </router-link>
+                  <router-link to="/login">
+                    &nbsp;
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    登入
+                  </router-link>
                 </a>
               </li>
             </ul>
           </div>
         </div>
         <div class="userinfo">
-          <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2665752539,2910740997&fm=27&gp=0.jpg" class="avatar" alt>
+          <img
+            src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2665752539,2910740997&fm=27&gp=0.jpg"
+            class="avatar"
+            alt
+          />
           <div class="welcome">
             <p class="name comenane">欢迎</p>
             <p class="name avatarname">
-              {{userName}}
-              <!-- 米斯特务 -->
+              <!-- {{userName}} -->
+              米斯特务
             </p>
           </div>
           <span class="username">
@@ -56,18 +49,25 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="main">
-                  <i class="fa fa-window-maximize"></i>
-                  首页</el-dropdown-item>
+                  <i class="fa fa-id-card"></i>
+                  首页
+                </el-dropdown-item>
                 <el-dropdown-item command="info">
                   <i class="fa fa-id-card"></i>
-                  个人信息</el-dropdown-item>
-               
-                <el-dropdown-item command="dingdan">
-                  <i class="fa fa-reorder"></i>
-                  资金流水</el-dropdown-item>
+                  管理员信息
+                </el-dropdown-item>
+                <el-dropdown-item command="addinfo">
+                  <i class="fa fa-id-card"></i>
+                  员工信息
+                </el-dropdown-item>
+                <el-dropdown-item command="moneylist">
+                  <i class="fa fa-id-card"></i>
+                  资金流水
+                </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <i class="fa  fa-reply-all"></i>
-                  退出</el-dropdown-item>
+                  <i class="fa fa-reply-all"></i>
+                  退出
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </span>
@@ -75,6 +75,7 @@
       </el-col>
     </el-row>
   </header>
+  </div>
 </template>
 <script>
 import { constants } from "crypto";
@@ -83,16 +84,10 @@ export default {
   name: "head-nav",
   data() {
     return {
-      userName: '',
-      
+      userName: "",
       restaurants: [],
       state: "",
-      labelPosition: "top",
-       gridData: [{
-          tel: '18805028102',
-          email: '王小虎@qq.com',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }]
+      labelPosition: "top"
     };
   },
   computed: {
@@ -100,8 +95,8 @@ export default {
       return this.$store.getters.user;
     }
   },
-  beforeMount(){
-    this.getUserName()
+  beforeMount() {
+    this.getUserName();
   },
   methods: {
     querySearch(queryString, cb) {
@@ -122,35 +117,43 @@ export default {
       };
     },
     handleIconClick(ev) {
-        console.log(ev);
-      },
+      console.log(ev);
+    },
     setDialogInfo(cmdItem) {
       //   console.log(cmdItem);
       switch (cmdItem) {
-        // 个人信息
+        // 首页main
         case "main":
-          this.main();
+          this.showhome();
           break;
+        // 个人信息
         case "info":
           this.showInfoList();
           break;
-          // 退出
+        case "addinfo":
+          this.showAddInfoList();
+          break;
+        case "monetlist":
+          this.MoneyList();
+          break;
+        // 退出
         case "logout":
           this.logout();
           break;
-         
-          // 订单
-        case "dingdan":
-          this.dingdan();
-          break;
       }
     },
-    main(){
-      this.$router.push("./index");
+    MoneyList(){
+      this.$router.push("./fundlist");
+    },
+    showhome() {
+      this.$router.push("./home");
     },
     showInfoList() {
       //   console.log('个人信息');
       this.$router.push("./infoshow");
+    },
+    showAddInfoList() {
+      this.$router.push("./addinfo");
     },
     logout() {
       //   console.log('退出');
@@ -161,49 +164,40 @@ export default {
       // 跳转
       this.$router.push("/login");
     },
-   
-    dingdan() {
-      this.$router.push("./order");
-    },
-    getUserName(){
-      this.$axios
-      .get('/api/customer',{headers:{token: localStorage.getItem("eleToken")}})
-      .then(res => {
-        // console.log(res);
-        this.userName = res.data.data.name;
-        
-      })
-    },
-    // 下载APP
-    download(){
-      window.location.href="http://119.23.243.252:8080/api/download/origins"
-      
-    }
+
+    getUserName() {}
   }
 };
 </script>
 
 
 <style scoped>
+.zhanwei{
+  width: 100%;
+  height: 60px;
+}
 .head-nav {
   width: 100%;
   min-width: 1456px;
   height: 60px;
   min-width: 600px;
-  padding: 5px;
+  /* padding: 5px; */
   background-color: #324057;
   color: #fff;
   border-bottom: 1px solid #1f2d3d;
+  position: fixed;
+  z-index: 20000;
 }
 .logo-container {
+  height: 60px;
   line-height: 60px;
   min-width: 400px;
 }
 .logo {
-  height: 50px;
-  width: 50px;
-  margin:0 15px;
-  vertical-align: middle;
+  height: 60px;
+  width: 80px;
+  margin: 0 0px 0 15px;
+  vertical-align: top;
   display: inline-block;
 }
 .title {
@@ -292,16 +286,5 @@ li {
 
 .highlighted .addr {
   color: #ddd;
-}
-/* 联系我们 */
-.el-button{
-  background: #324057;
-  color:#fff;
-  border:1px solid #324057;
-  padding:12px 0;
-
-}
-a router-link:hover{
-  color:bule;
 }
 </style>
