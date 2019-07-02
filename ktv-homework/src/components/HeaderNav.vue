@@ -49,19 +49,19 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="main">
-                  <i class="fa fa-id-card"></i>
+                  <i class="fa fa-bars"></i>
                   首页
                 </el-dropdown-item>
                 <el-dropdown-item command="info">
-                  <i class="fa fa-id-card"></i>
-                  管理员信息
+                  <i class="fa fa-user-circle"></i>
+                  个人信息
                 </el-dropdown-item>
                 <el-dropdown-item command="addinfo">
                   <i class="fa fa-id-card"></i>
                   员工信息
                 </el-dropdown-item>
                 <el-dropdown-item command="moneylist">
-                  <i class="fa fa-id-card"></i>
+                  <i class="fa fa-jpy"></i>
                   资金流水
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
@@ -133,7 +133,7 @@ export default {
         case "addinfo":
           this.showAddInfoList();
           break;
-        case "monetlist":
+        case "moneylist":
           this.MoneyList();
           break;
         // 退出
@@ -182,9 +182,9 @@ export default {
   height: 60px;
   min-width: 600px;
   /* padding: 5px; */
-  background-color: #324057;
+  background-color: #4c4948;
   color: #fff;
-  border-bottom: 1px solid #1f2d3d;
+  border-bottom: 1px solid #b1b479;
   position: fixed;
   z-index: 20000;
 }

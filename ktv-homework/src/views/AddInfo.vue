@@ -51,7 +51,7 @@
       <el-button icon="el-icon-plus" circle @click="dialogInfoFormVisible=true"></el-button>
        <!-- 编辑弹框 -->
               <el-dialog title="添加员工信息" :visible.sync="dialogInfoFormVisible" append-to-body>
-                <el-form :model="form1">
+                <el-form >
                   <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="form1.name" autocomplete="on"></el-input>
                   </el-form-item>
@@ -174,7 +174,8 @@ export default {
 .addinfo {
   width: 100%;
   height: 100%;
-  /* background-color: pink; */
+  min-height: 697px;
+  background-color: #fdfcf8;
   overflow: hidden;
   position: relative;
 }
@@ -183,7 +184,7 @@ export default {
   height: 100%;
   background-color: blue;
   overflow: hidden;
-  margin: 10px auto;
+  margin: 40px auto;
 }
 .add{
   width: 150px;
@@ -194,6 +195,17 @@ export default {
   position: fixed;
   top: 100px;
   right: 100px;
+  animation: myadd 10s linear infinite alternate;
+}
+@keyframes myadd {
+  0%{
+    top: 15%;
+    right: 5%;
+  }
+  100%{
+    top: 75%;
+    right: 5%;
+  }
 }
 .add p{
   display: block;
@@ -207,6 +219,5 @@ export default {
 }
 .add .el-button{
   margin: 0% 36%;
-  
 }
 </style>

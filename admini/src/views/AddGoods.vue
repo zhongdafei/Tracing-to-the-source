@@ -74,21 +74,10 @@ export default {
   methods: {
    
     onSubmit() {
-      let config = {
-        "headers": {
-          "token": localStorage.getItem("eleToken")
-        }
-      };
-
-      // console.log(config)
       this.$axios
-        .post("/api/producible", this.form, config)
-        .then(function(result) {
-          // console.log(result.data.code);
-          
-          // if(result.data)
-        });
-        this.$message({
+        .post("/api/producible", this.form, {headers:{token:localStorage.getItem("eleToken")}})
+        .then(res=>{
+           this.$message({
           message: '恭喜你，添加成功',
           type: 'success'
         });
@@ -96,6 +85,8 @@ export default {
         this.form.desc=
         this.form.type=
         this.form.image="";
+        });
+       
     }
   }
 };

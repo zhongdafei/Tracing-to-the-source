@@ -1,4 +1,5 @@
 <template>
+<div class="zhanwei">
   <div class="login">
     <section class="form_container">
       <div class="manage_tip">
@@ -32,6 +33,7 @@
         </div>
       </el-form>
     </section>
+  </div>
   </div>
 </template>
 
@@ -107,19 +109,23 @@ export default {
 </script>
 
 <style scoped>
+.zhanwei{
+  width: 100%;
+  height: 100%;
+}
 .login {
   position: relative;
   width: 100%;
   height: 100%;
   background: url(../assets/蓝紫色bgc.jpg) no-repeat center center;
   background-size: 100% 100%;
+  min-height: 757px;
 }
 .form_container {
   width: 370px;
-  height: 210px;
   position: absolute;
   top: 20%;
-  left: 34%;
+  left: 40%;
   padding: 25px;
   border-radius: 5px;
   text-align: center;

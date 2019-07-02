@@ -60,6 +60,14 @@
           </div>
         </div>
       </div>
+      <div class="footer">
+        <div class="center">
+          <!-- 电话 邮箱 地址 -->
+          <p>电话：18870072550</p>
+          <p>邮箱：18870072550@qq.com</p>
+          <p>地址：江西理工大学应用科学学院</p>
+        </div>
+      </div>
       <!-- 回到顶部 -->
       <!-- <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop> -->
     </div>
@@ -161,6 +169,10 @@ export default {
   box-sizing: border-box;
 }
 /* 轮播图 */
+.lunbotu{
+  width: 100%;
+  height: 400px;
+}
 .lunbotu img {
   width: 100%;
   height: 400px;
@@ -186,7 +198,7 @@ export default {
 }
 /* card产品展示 */
 .goodlist {
-  height: 100%;
+  height: 120%;
   width: 1200px;
   margin: 0 auto;
   display: inline-block;
@@ -271,5 +283,28 @@ button.el-button.el-button {
 
 .clearfix:after {
   clear: both;
+}
+/* 底部 */
+.footer{
+    width: 100%;
+    height: 100px;
+    background-color:rgba(7, 7, 7, 0.5);
+}
+.footer .center{
+  width: 30%;
+  height: 100%;
+  /* background-color: pink; */
+  margin: 0 auto;
+}
+.center p{
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #ccc;
+  font-family: STFangsong;
+}
+.center p.hover{
+  cursor:pointer;
 }
 </style>

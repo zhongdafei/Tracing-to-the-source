@@ -1,14 +1,7 @@
 <template>
   <div class="order">
     <div class="maininfo">
-      <div style="margin-top: 15px;">
-        <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-          <el-select v-model="select" slot="prepend" placeholder="请选择">
-            <el-option label="订单号" value="1"></el-option>
-          </el-select>
-          <el-button slot="append" icon="el-icon-search" @click="lookup"></el-button>
-        </el-input>
-      </div>
+     
       <el-table :data="items" style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -60,7 +53,7 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="商品 ID" prop="orderId"></el-table-column>
+        <el-table-column label="订单号" prop="orderId"></el-table-column>
         <el-table-column label="所属店铺">生产过程跟踪及产品溯源系统</el-table-column>
         <el-table-column label="创建时间" prop="createTime"></el-table-column>
       </el-table>
@@ -87,9 +80,6 @@ export default {
       // 存放所有订单的所有信息
       items: [],
 
-      // 输入框
-      input3: "",
-      select: ""
     };
   },
   computer: {},
@@ -97,25 +87,7 @@ export default {
     this.getCurrentUserOrder();
   },
   methods: {
-    // 按ID寻找指定商品生产过程数据
-    lookup() {
-      let id = this.input3;
-      this.$axios.get(`/api/product/${id}`).then(res => {
-        console.log(res);
-        if (res.data.code === 200) {
-          const h = this.$createElement;
-          this.$msgbox({
-            title: "消息",
-            message: h("p", null, [
-              h("span", null, "内容可以是 "),
-              h("i", { style: "color: teal" }, "VNode")
-            ]),
-            showCancelButton: false,
-            confirmButtonText: "关闭",
-          })
-        }
-      });
-    },
+   
 
     // 時間轉換函數
     changeTime(obj) {
@@ -128,6 +100,7 @@ export default {
         date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes();
       let s =
         date.getSeconds() >= 10 ? date.getSeconds() : "0" + date.getSeconds();
+        // console.log(y + "-" + m + "-" + d + "  " + h + ":" + f + ":" + s)
       return y + "-" + m + "-" + d + "  " + h + ":" + f + ":" + s;
     },
     // 獲取當前用戶的所有訂單
@@ -139,9 +112,13 @@ export default {
         .then(res => {
           // console.log(res.data.data);
           this.items = res.data.data.map(i => {
-            if (i.status.orderStatus === "CREATE") {
-              // console.log(i)eateTime);
+            if (i.status.orderStatus === "CREATE" || "ACCEPT" ) {
+              // console.log(this.changeTime(i.order.updateTime));
+              i.order.createTime=this.changeTime(i.order.createTime);
+              i.order.updateTime=this.changeTime(i.order.updateTime);
+              console.log(i);
               return i.order;
+              
             }
             return null;
           });
@@ -189,6 +166,7 @@ export default {
 .maininfo {
   width: 948px;
   margin-left: 42px;
+  overflow: hidden;
 }
 .demo-table-expand .el-form-item {
   margin-right: 0;
@@ -203,6 +181,9 @@ export default {
   width: 400px !important;
 }
 .el-dialog .el-button {
+  margin-top: 40px;
+}
+.el-table{
   margin-top: 40px;
 }
 /* 输入框  */

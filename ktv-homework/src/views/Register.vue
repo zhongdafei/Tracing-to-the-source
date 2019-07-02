@@ -134,29 +134,28 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background: url(../assets/蓝紫色bgc.jpg) no-repeat center center;
+  min-height: 757px;
+  background: url("../assets/蓝紫色bgc.jpg") no-repeat center center;
   background-size: 100% 100%;
-  overflow: hidden;
 }
 .form_container {
   width: 370px;
-  height: 210px;
   position: absolute;
   top: 10%;
-  left: 34%;
+  left: 40%;
   padding: 25px;
   border-radius: 5px;
   text-align: center;
 }
-.form_container .manage_tip{
-  width: 400px;
+.manage_tip{
+  width: 320px;
   height: 50px;
   line-height: 50px;
   margin:10px auto;
 }
-.registerForm[data-v-63ae9146] {
+/* .registerForm[data-v-63ae9146] {
   margin:20px auto!important;
-}
+} */
 .form_container .manage_tip .title {
   font-family: "Times New Roman", Times, serif;
   text-shadow: 2px 2px 1px #ccc;

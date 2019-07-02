@@ -9,6 +9,7 @@ import AddInfo from "./views/AddInfo.vue";
 import InfoShow from "./views/InfoShow.vue";
 import FundList from "./views/FundList.vue";
 
+
 Vue.use(Router)
 
 export default new Router({

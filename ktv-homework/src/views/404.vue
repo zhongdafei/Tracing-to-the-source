@@ -1,30 +1,18 @@
 <template>
   <div class="notfound">
-    <img src="../assets/404.gif" alt>
+    <img src="../assets/404.gif" alt="">
   </div>
 </template>
-<script>
-export default {
-    data(){
-        return{
-            name:[],
-        };
-    }
-}
-</script>
+
 
 <style scoped>
-.notgound {
-  width: 50%;
-  height: 50%;
-  text-align: center;
-  margin: 0 auto;
-  overflow: hidden;
+.notfound{
+  width: 100%;
+  height: 100%;
 }
-img {
+img{
   width: 50%;
   height: 50%;
-  display: inline-block;
-  margin: 0 auto;
-  }
+  margin: 10px 25%;
+}
 </style>
