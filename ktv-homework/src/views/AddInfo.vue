@@ -1,5 +1,10 @@
 <template>
   <div class="addinfo">
+    <div class="infolist">
+      <div class="slip">
+      <p>员工信息表</p>
+      </div>
+    </div>
     <div class="w">
       <div class="form">
         <el-table :data="tableData" stripe border style="width: 100%">
@@ -187,10 +192,9 @@ export default {
   margin: 40px auto;
 }
 .add{
-  width: 150px;
+  width: 130px;
   height: 150px;
   background-color: #b1b479;
-  /* border: 1px solid #ddd; */
   border-radius: 50px;
   position: fixed;
   top: 100px;
@@ -209,7 +213,7 @@ export default {
 }
 .add p{
   display: block;
-  width: 150px;
+  width: 130px;
   height: 70px;
   line-height: 70px;
   font-size: 24px;
@@ -219,5 +223,34 @@ export default {
 }
 .add .el-button{
   margin: 0% 36%;
+}
+.infolist{
+  position: fixed;
+  top: 200px;
+  left: 100px;
+  width: 100px;
+  height: 300px;
+  background-color: #b1b479;
+  display:inline-block;
+  border-radius: 50px;
+  transition: 1s ease-in-out ;
+}
+.infolist:hover,.infolist p:hover{
+  transform: rotate(360deg);
+}
+.slip{
+  width: 24px;
+  height: 300px;
+  position: fixed;
+  left: 135px;
+  /* background-color: pink; */
+}
+.infolist p{
+  position: absolute;
+  display:inline-block; 
+  font-size: 24px;
+  font-family: STKaiti;
+  margin-top: 70px;
+  color:forestgreen;
 }
 </style>

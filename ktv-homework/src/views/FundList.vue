@@ -14,9 +14,15 @@
               <p>支出/收入: {{ scope.row.inOrOut }}</p>
               <p>资金流动方式: {{ scope.row.way }}</p>
               <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.inOrOut }}</el-tag>
+                <el-tag size="medium" type="info">{{ scope.row.inOrOut }}</el-tag>
               </div>
             </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column label="数额" width="180"  align="center">
+          <template slot-scope="scope">
+            <i class="fa fa-usd" aria-hidden="true"></i>
+            <span style="margin-left: 10px">{{ scope.row.number}}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作"  align="center">
@@ -37,21 +43,25 @@ export default {
         {
           date: "2016-05-02",
           inOrOut: "收入",
+          number: "+100",
           way: "支付宝"
         },
         {
           date: "2016-05-04",
           inOrOut: "支出",
+          number: "-50",
           way: "支付宝"
         },
         {
           date: "2016-05-01",
           inOrOut: "收入",
+          number: "+150",
           way: "微信"
         },
         {
           date: "2016-05-03",
           inOrOut: "支出",
+          number: "-50",
           way: "现金"
         }
       ]

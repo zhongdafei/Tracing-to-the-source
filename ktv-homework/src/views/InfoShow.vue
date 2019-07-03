@@ -219,21 +219,21 @@ h3 {
   text-align: center;
   color: seagreen;
 }
-.qiu,
-.qiu1 {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: fixed;
-  animation-play-state: running;
-}
 .center p{
     /* display: inline-block; */
     font-size: 24px;
     font-weight: 700;
     font-family: STKaiti;
     margin-top: 50px;
+}
+.qiu,
+.qiu1 {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  animation-play-state: running;
 }
 .qiu {
   animation: myqiu 5s linear infinite alternate;
@@ -243,56 +243,56 @@ h3 {
  animation: myqiu1 5s linear infinite alternate;
   background-color: rgb(73, 73, 133);
 }
-@keyframes myqiu1 {
-  0% {
-    left: 755px;
-    top: 170px;
-  }
-  33% {
-    left: 820px;
-    top: 225px;
-  }
-  48% {
-    left: 770px;
-    top: 305px;
-  }
-  60% {
-    left: 820px;
-    top: 390px;
-  }
-  75% {
-    left: 770px;
-    top: 470px;
-  }
-  100% {
-    left: 836px;
-    top: 623px;
-  }
-}
 @keyframes myqiu {
  0% {
-    left: 836px;
-    top: 170px;
+    top: 0px;
+    left: 80px;
   }
   33% {
-    left: 770px;
-    top: 225px;
+    top: 55px;
+    left: 15px;
   }
   48% {
-    left: 820px;
-    top: 305px;
+    top: 140px;
+    left: 65px;
   }
   60% {
-    left: 770px;
-    top: 390px;
+    top: 220px;
+    left: 15px;
   }
   75% {
-    left: 825px;
-    top: 470px;
+    top: 300px;
+    left: 65px;
   }
   100% {
-    left: 753px;
-    top: 623px;
+    top: 450px;
+    left: 0px;
+  }
+}
+@keyframes myqiu1 {
+  0% {
+    top: 0px;
+    left: 0px;
+  }
+  33% {
+    top: 55px;
+    left: 65px;
+  }
+  48% {
+    top: 140px;
+    left: 15px;
+  }
+  60% {
+    top: 220px;
+    left: 65px;
+  }
+  75% {
+    top: 300px;
+    left: 15px;
+  }
+  100% {
+    top: 450px;
+    left: 80px;
   }
 }
 </style>

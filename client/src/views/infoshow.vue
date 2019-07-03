@@ -56,7 +56,7 @@
           </div>
           <div class="user-add">
             <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;
-            <span>{{userCreateTime}}</span>
+            <span>{{userUpdateTime}}</span>
           </div>
         </div>
       </el-col>
@@ -86,7 +86,7 @@ export default {
       userPhone: "",
       userAddr: "",
       userEmail: "",
-      userCreateTime: "",
+      userUpdateTime: "",
       labelPosition: "top",
       dialogVisible: false,
       formLabelAlign: {
@@ -131,11 +131,12 @@ export default {
           headers: { token: localStorage.getItem("eleToken") }
         })
         .then(res => {
+          // console.log(res.data);
           this.userName = res.data.data.name;
           this.userPhone = res.data.data.phone;
           this.userEmail = res.data.data.email;
           this.userAddr = res.data.data.addr;
-          let date = new Date(res.data.data.createTime);
+          let date = new Date(res.data.data.updateTime);
           let y = date.getFullYear();
           let m = date.getMonth();
           let d = date.getDate();
@@ -148,7 +149,7 @@ export default {
             date.getSeconds() >= 10
               ? date.getSeconds()
               : "0" + date.getSeconds();
-          this.userCreateTime =
+          this.userUpdateTime =
             y + "-" + m + "-" + d + "  " + h + ":" + f + ":" + s;
         });
     },
@@ -165,7 +166,7 @@ export default {
           headers: { token: localStorage.getItem("eleToken") }
         })
         .then(res => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           if (res.data.code == 200) {
             this.formLabelAlign.name = this.formLabelAlign.phone = this.formLabelAlign.email = this.formLabelAlign.addr =
               "";

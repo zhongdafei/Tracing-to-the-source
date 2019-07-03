@@ -18,6 +18,9 @@
               <el-form-item label="商品重量">
                 <span>{{ props.row.weight }}</span>
               </el-form-item>
+              <el-form-item label="当前状态">
+                <span style="color:blue;">{{ props.row.state }}</span>
+              </el-form-item>
 
               <el-form-item label="更新时间">
                 <span>{{ props.row.updateTime }}</span>
@@ -116,7 +119,14 @@ export default {
               // console.log(this.changeTime(i.order.updateTime));
               i.order.createTime=this.changeTime(i.order.createTime);
               i.order.updateTime=this.changeTime(i.order.updateTime);
-              console.log(i);
+              console.log(i.status.orderStatus);
+              if(i.status.orderStatus==="ACCEPT"){
+              i.order.state="已接受";
+              }else if(i.status.orderStatus==="REFUSE"){
+                i.order.state="已拒绝";
+              }else{
+                i.order.status="待处理";
+              }
               return i.order;
               
             }
@@ -137,14 +147,21 @@ export default {
           headers: { token: localStorage.getItem("eleToken") }
         })
         .then(res => {
-          // console.log(res);
-          this.$message({
-            message: "恭喜你，修改成功",
-            type: "success"
-          });
-          this.formLabelAlign.number = this.formLabelAlign.diameter = this.formLabelAlign.length = this.formLabelAlign.weight =
-            "";
-            this.getCurrentUserOrder();
+          console.log(res);
+          if(res.data.code < 300) {
+            this.$message({
+              message: "恭喜你，修改成功",
+              type: "success"
+            });
+            this.formLabelAlign.number = this.formLabelAlign.diameter = this.formLabelAlign.length = this.formLabelAlign.weight =
+              "";
+              this.getCurrentUserOrder();
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error"
+            });
+          }
         });
     },
     resetForm() {
