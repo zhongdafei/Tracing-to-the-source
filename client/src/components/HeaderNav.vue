@@ -108,9 +108,9 @@ export default {
       labelPosition: "top",
       gridData: [
         {
-          tel: "18805028102",
-          email: "王小虎@qq.com",
-          address: "上海市普陀区金沙江路 1518 弄"
+          tel: "18870772550",
+          email: "18870772550@qq.com",
+          address: "江西理工大学应用科学学院"
         }
       ]
     };
@@ -160,7 +160,7 @@ export default {
       let id = this.state;
       this.$axios.get(`/api/product/${id}`).then(res => {
         if (res.data.code === 200) {
-          console.log(res.data.data);
+          console.log(res.data);
           let data=res.data.data;
           const h = this.$createElement;
           data.first.createTime=this.changeTime(data.first.createTime);

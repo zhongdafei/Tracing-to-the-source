@@ -1,7 +1,6 @@
 <template>
-  <div class="fundlist">
-    <div class="w">
-      <el-table ref="filterTable" :data="tableData" style="width: 100%">
+  <div class="demo">
+    <el-table ref="filterTable" :data="tableData" style="width: 100%">
       <el-table-column label="日期" width="180" align="center">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
@@ -55,10 +54,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-
-     
-    </div>
   </div>
 </template>
 <script>
@@ -82,56 +77,30 @@ export default {
           date: "2016-05-01",
           inOrOut: "收入",
           number: "+25",
-          way: "微 信"
+          way: "微信"
         },
         {
           date: "2016-05-03",
           inOrOut: "支出",
           number: "-25",
-          way: "微 信"
+          way: "微信"
         }
       ]
     };
   },
   methods: {
-    // 收支标签
     filterTag(value, row) {
       return row.inOrOut === value;
     },
-    // 支付方式标签
     filterWay(value, row) {
       return row.way === value;
     },
-    // 编辑方法
     handleEdit(index, row) {
       console.log(index, row);
     },
-    // 删除的方法
     handleDelete(index, row) {
       console.log(index, row);
-      this.tableData.splice(index,1);
     }
   }
 };
 </script>
-<style scoped>
-.fundlist {
-  width: 100%;
-  height: 100%;
-  background-color: #e2d8b036;
-}
-.w {
-  width: 70%;
-  height: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fdfcf8;
-  overflow: hidden;
-  min-height: 697px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.55), 0 0 6px rgba(0, 0, 0, 0.04);
-}
-.el-table {
-  margin: 35px auto;
-  width: 90%;
-}
-</style>

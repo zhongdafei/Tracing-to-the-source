@@ -176,6 +176,7 @@ export default {
 .left {
   left: 200px;
   top: 40px;
+  background-color: #fdfcf8;
 }
 .right {
   right: 200px;

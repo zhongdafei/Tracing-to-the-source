@@ -11,8 +11,8 @@
       <div class="order">
         <template>
           <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="orderId" label="订单号" align="center" width="290"></el-table-column>
-            <el-table-column prop="producibleId" label="产品ID" align="center" width="300"></el-table-column>
+            <el-table-column prop="orderId" label="订单号" align="center" width="280"></el-table-column>
+            <el-table-column prop="producibleId" label="产品ID" align="center" width="280"></el-table-column>
             <el-table-column prop="number" label="数量" align="center" width="60"></el-table-column>
             <el-table-column prop="diameter" label="直径" align="center" width="60"></el-table-column>
             <el-table-column prop="length" label="长度" align="center" width="60"></el-table-column>
@@ -97,12 +97,12 @@ export default {
       tableName: [],
       // 已处理的订单
       doneData: [],
-      refuseData: []
+      refuseData: [],
+      name:[]
     };
   },
   beforeMount() {
     this.getAllOrderInfo();
-    this.getAllHandledInfo();
     // this.getUserName();
   },
   methods: {
@@ -120,13 +120,6 @@ export default {
       // console.log(y + "-" + m + "-" + d + "  " + h + ":" + f + ":" + s)
       return y + "-" + m + "-" + d + "  " + h + ":" + f + ":" + s;
     },
-
-    // 获取所有已处理的订单信息
-    getAllHandledInfo() {
-      // this.$axios.get("/api/handle",{headers:{token:localStorage.getItem("eleToken")}}).then(res=>{
-      //   console.log(res);
-      // })
-    },
     // 获取所有订单信息
     getAllOrderInfo() {
       this.$axios
@@ -140,30 +133,30 @@ export default {
           this.doneData = [];
           this.refuseData = [];
           for (let x of data) {
+
+
+
             // 未经处理订单
             if (x.status.orderStatus === "CREATE") {
-              // console.log(x);
-
-              // 更改时间格式
               x.order.createTime = this.changeTime(x.order.createTime);
               x.order.updateTime = this.changeTime(x.order.updateTime);
-              // console.log(x.order.createTime);
-
               // 获取用户name
-              // this.getUserName(x, x.order.customerId);
-
+            //  var name= this.getUserName(x.order.customerId);
+              // console.log(name)
               this.tableData.push(x.order);
+
+
 
               // 已接收的订单
             } else if (x.status.orderStatus === "ACCEPT") {
-              // 更改时间格式
               x.order.createTime = this.changeTime(x.order.createTime);
               x.order.updateTime = this.changeTime(x.order.updateTime);
               this.doneData.push(x.order);
 
+
+
               // 已拒绝的订单
             } else {
-              // 更改时间格式
               x.order.createTime = this.changeTime(x.order.createTime);
               x.order.updateTime = this.changeTime(x.order.updateTime);
               this.refuseData.push(x.order);
@@ -172,16 +165,17 @@ export default {
         });
     },
     // 管理员通过客户ID获取用户姓名
-    getUserName(x, id) {
-      this.$axios
-        .get(`/api/customer/${id}`, {
-          headers: { token: localStorage.getItem("eleToken") }
-        })
-        .then(res => {
-          this.tableData.push(res.data.data.name);
-          // console.log(res.data.data.name);
-        });
-    },
+    // getUserName(id) {
+    //   var that=this;
+    //   this.$axios
+    //     .get(`/api/customer/${id}`, {
+    //       headers: { token: localStorage.getItem("eleToken") }
+    //     })
+    //     .then(res => {
+    //       that.name=res.data.data.name;
+    //     });
+    //     return that.name;
+    // },
     // 同意订单操作
     handleEdit(index, row) {
       console.log(index, row);
@@ -217,10 +211,12 @@ export default {
 </script>
 <style scoped>
 .up,
-.down {
+.down,
+.last {
   width: 100%;
+  max-width: 1350px;
   height: 100%;
-  margin: 10px 10px;
+  margin: 10px auto;
 }
 .up {
   background-color: rgb(243, 213, 208);

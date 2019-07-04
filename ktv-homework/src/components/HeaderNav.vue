@@ -64,6 +64,10 @@
                   <i class="fa fa-jpy"></i>
                   资金流水
                 </el-dropdown-item>
+                <!-- <el-dropdown-item command="demolist">
+                  <i class="fa fa-jpy"></i>
+                  资金流水111
+                </el-dropdown-item> -->
                 <el-dropdown-item command="logout">
                   <i class="fa fa-reply-all"></i>
                   退出
@@ -136,12 +140,18 @@ export default {
         case "moneylist":
           this.MoneyList();
           break;
+        // case "demolist":
+        //   this.demoList();
+        //   break;
         // 退出
         case "logout":
           this.logout();
           break;
       }
     },
+    // demoList(){
+    //   this.$router.push("./fundlister");
+    // },
     MoneyList(){
       this.$router.push("./fundlist");
     },

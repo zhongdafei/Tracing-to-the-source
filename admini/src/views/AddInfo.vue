@@ -105,7 +105,8 @@ export default {
 }
 .farm {
   width: 700px;
-  height: 95%;
+  height: 97%;
+  min-height: 666px;
   margin: 10px auto;
   background-color: rgb(223, 233, 221);
 }

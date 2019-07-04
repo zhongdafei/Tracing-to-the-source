@@ -91,10 +91,10 @@ export default {
       formLabelWidth: "120px",
       // 轮播图
       images: [
-        { id: 0, idView: require("../assets/铜丝.jpg") },
-        { id: 1, idView: require("../assets/铜柱.jpg") },
-        { id: 2, idView: require("../assets/铜棒.jpg") },
-        { id: 3, idView: require("../assets/铜片.jpg") }
+        { id: 0, idView: require("../assets/tongsi.jpg") },
+        { id: 1, idView: require("../assets/tongzhu.jpg") },
+        { id: 2, idView: require("../assets/tongbang.jpg") },
+        { id: 3, idView: require("../assets/tongpian.jpg") }
       ],
       // 产品列表
       items: []
@@ -172,6 +172,9 @@ export default {
 .lunbotu{
   width: 100%;
   height: 400px;
+}
+.lunbotu::-webkit-scrollbar{
+  display: none;
 }
 .lunbotu img {
   width: 100%;

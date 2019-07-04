@@ -65,7 +65,7 @@ export default {
 <style scoped>
 .menu_page {
   position: fixed;
-  top: 71px;
+  top: 60px;
   left: 0;
   min-height: 100%;
   background-color: #324057;

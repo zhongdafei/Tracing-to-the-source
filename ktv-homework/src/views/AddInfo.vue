@@ -192,10 +192,10 @@ export default {
   margin: 40px auto;
 }
 .add{
-  width: 130px;
+  width: 150px;
   height: 150px;
   background-color: #b1b479;
-  border-radius: 50px;
+  border-radius: 30px;
   position: fixed;
   top: 100px;
   right: 100px;
@@ -213,7 +213,7 @@ export default {
 }
 .add p{
   display: block;
-  width: 130px;
+  width: 150px;
   height: 70px;
   line-height: 70px;
   font-size: 24px;
@@ -225,13 +225,14 @@ export default {
   margin: 0% 36%;
 }
 .infolist{
-  position: fixed;
+  position: relative;
+  float: left;
   top: 200px;
   left: 100px;
   width: 100px;
   height: 300px;
   background-color: #b1b479;
-  display:inline-block;
+  /* display:inline-block; */
   border-radius: 50px;
   transition: 1s ease-in-out ;
 }
@@ -241,8 +242,9 @@ export default {
 .slip{
   width: 24px;
   height: 300px;
-  position: fixed;
-  left: 135px;
+  float: left;
+  position: relative;
+  left: 40px;
   /* background-color: pink; */
 }
 .infolist p{

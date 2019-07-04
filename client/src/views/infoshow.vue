@@ -238,7 +238,7 @@ export default {
 }
 
 .userinfo .btn {
-  margin-top: 20px;
+  margin-top: 71px;
   margin-right: 55px;
   float: right;
 }

@@ -8,7 +8,7 @@ import Home from "./views/Home.vue";
 import AddInfo from "./views/AddInfo.vue";
 import InfoShow from "./views/InfoShow.vue";
 import FundList from "./views/FundList.vue";
-
+// import FundLister from "./views/FundLister.vue";
 
 Vue.use(Router)
 
@@ -49,6 +49,11 @@ export default new Router({
           name: 'fundlist',
           component: FundList
         },
+        // {
+        //   path: '/fundlister',
+        //   name: 'fundlister',
+        //   component: FundLister
+        // },
       ]
     },
     {

@@ -3,7 +3,7 @@
     <div class="w">
       <div class="otherspace"></div>
       <div class="space">
-        <p>所有員工信息</p>
+        <p>所有员工信息</p>
       </div>
 
       <el-table :data="tableData" style="width: 100%">

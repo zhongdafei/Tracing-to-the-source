@@ -56,9 +56,10 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="订单号" prop="orderId"></el-table-column>
-        <el-table-column label="所属店铺">生产过程跟踪及产品溯源系统</el-table-column>
-        <el-table-column label="创建时间" prop="createTime"></el-table-column>
+        <el-table-column label="订单号" prop="orderId" align="center"></el-table-column>
+        <el-table-column label="当前状态" prop="state" align="center">
+        </el-table-column>
+        <el-table-column label="创建时间" prop="createTime"  align="center"></el-table-column>
       </el-table>
     </div>
   </div>
@@ -125,10 +126,9 @@ export default {
               }else if(i.status.orderStatus==="REFUSE"){
                 i.order.state="已拒绝";
               }else{
-                i.order.status="待处理";
+                i.order.state="待处理";
               }
               return i.order;
-              
             }
             return null;
           });

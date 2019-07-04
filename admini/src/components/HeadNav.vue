@@ -45,10 +45,6 @@
           登入
         </router-link>
       </el-col>
-      <el-col :span="3" class="app">
-        <i class="fa fa-qrcode" aria-hidden="true"></i>
-        <a href="#">下载app</a>
-      </el-col>
     </el-row>
   </header>
 </template>
@@ -116,14 +112,16 @@ export default {
   width: 100%;
   height: 60px;
   min-width: 600px;
-  padding: 5px;
   background: #324057;
   color: #fff;
   border-bottom: 1px solid #1f2d3d;
 }
 .logo-container {
-  line-height: 65px;
+  line-height: 59px;
   min-width: 400px;
+}
+.el-row{
+  height: 60px;
 }
 .logo {
   height: 50px;
