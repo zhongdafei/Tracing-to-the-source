@@ -1,106 +1,321 @@
 <template>
-  <div class="demo">
-    <el-table ref="filterTable" :data="tableData" style="width: 100%">
-      <el-table-column label="日期" width="180" align="center">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.date }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column
-        prop="inOrOut"
-        label="收支"
-        width="100"
-        :filters="[{ text: '收入', value: '收入' }, { text: '支出', value: '支出' }]"
-        :filter-method="filterTag"
-        filter-placement="bottom-end"
-      >
-        <template slot-scope="scope">
-          <el-tag
-            :type="scope.row.inOrOut === '收入' ? 'primary' : 'danger'"
+  <div class="home">
+    <el-tabs v-model="activeName" @tab-click="handleClick" type="border-card">
+      <el-tab-pane name="first">
+        <span slot="label">
+          <i class="el-icon-loading"></i> 小间
+        </span>
+        <div class="small-rooms" >
+          <div class="first-sr" v-for="(item,index) in tableData" :key="item.id">
+            <!-- 序号 -->
+            <div class="serial" >{{item.id}}</div>
+            <!-- 更新 -->
+            <div class="updata" @click="clean(index)">
+              <i class="el-icon-refresh" style="font-size:22px"></i>
+            </div>
+            <!-- 计时器 -->
+            <div class="time">
+              <Timer></Timer>
+            </div>
+            <!-- 内容 -->
+            <div class="content">
+              <ul>
+                <li>可容纳6人</li>
+                <li>标价10元每小时</li>
+              </ul>
+            </div>
+            <!-- 按钮 -->
+            <div class="btn">
+            <el-button 
+            plain
+            :type="item.fullbtn === '已满'?'danger':'primary'" 
+            :disabled="item.fullbtn === '空'? false : true "
             disable-transitions
-          >{{scope.row.inOrOut}}</el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="数额" width="180" align="center">
-        <template slot-scope="scope">
-          <i class="fa fa-usd" aria-hidden="true"></i>
-          <span style="margin-left: 10px">{{ scope.row.number}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column
-        prop="way"
-        label="支付方法"
-        width="100"
-        :filters="[{ text: '支付宝', value: '支付宝' }, { text: '微信', value: '微信' }]"
-        :filter-method="filterWay"
-        filter-placement="bottom-end"
-      >
-        <template slot-scope="scope">
-          <el-tag
-            :type="scope.row.way === '支付宝' ? 'primary' : 'success'"
+            @click="full(index)">{{item.fullbtn}}</el-button>
+            <el-button 
+            plain
+            :type="item.orderbtn === '已预定'?'danger':'success'" 
+            :disabled="item.orderbtn === '预定'? false : true "
             disable-transitions
-          >{{scope.row.way}}</el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="操作" align="center">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+            @click="order(index)">{{item.orderbtn}}</el-button>
+            </div>
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="中间" name="second">
+         <div class="small-rooms" >
+          <div class="second-sr" v-for="(item,index) in formData" :key="item.id">
+            <!-- 序号 -->
+            <div class="serial" >{{item.id}}</div>
+            <!-- 更新 -->
+            <div class="updata" @click="formclean(index)">
+              <i class="el-icon-refresh" style="font-size:22px"></i>
+            </div>
+            <!-- 计时器 -->
+            <div class="time">
+              <Timer></Timer>
+            </div>
+            <!-- 内容 -->
+            <div class="content">
+              <ul>
+                <li>可容纳10人</li>
+                <li>标价15元每小时</li>
+              </ul>
+            </div>
+            <!-- 按钮 -->
+            <div class="btn">
+            <el-button 
+            plain
+            :type="item.fullbtn === '已满'?'danger':'primary'" 
+            :disabled="item.fullbtn === '空'? false : true "
+            disable-transitions
+            @click="formfull(index)">{{item.fullbtn}}</el-button>
+            <el-button 
+            plain
+            :type="item.orderbtn === '已预定'?'danger':'success'" 
+            :disabled="item.orderbtn === '预定'? false : true "
+            disable-transitions
+            @click="formorder(index)">{{item.orderbtn}}</el-button>
+            </div>
+          </div>
+         </div>
+      </el-tab-pane>
+      <el-tab-pane label="大间" name="third">
+         <div class="small-rooms" >
+          <div class="third-sr" v-for="(item,index) in bigData" :key="item.id">
+            <!-- 序号 -->
+            <div class="serial" >{{item.id}}</div>
+            <!-- 更新 -->
+            <div class="updata" @click="bigclean(index)">
+              <i class="el-icon-refresh" style="font-size:22px"></i>
+            </div>
+            <!-- 计时器 -->
+            <div class="time">
+              <Timer></Timer>
+            </div>
+            <!-- 内容 -->
+            <div class="content">
+              <ul>
+                <li>可容纳15人</li>
+                <li>标价20元每小时</li>
+              </ul>
+            </div>
+            <!-- 按钮 -->
+            <div class="btn">
+            <el-button 
+            plain
+            :type="item.fullbtn === '已满'?'danger':'primary'" 
+            :disabled="item.fullbtn === '空'? false : true "
+            disable-transitions
+            @click="bigfull(index)">{{item.fullbtn}}</el-button>
+            <el-button 
+            plain
+            :type="item.orderbtn === '已预定'?'danger':'success'" 
+            :disabled="item.orderbtn === '预定'? false : true "
+            disable-transitions
+            @click="bigorder(index)">{{item.orderbtn}}</el-button>
+            </div>
+          </div>
+         </div>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script>
+import Timer from "./Timer";
 export default {
+  components: { Timer },
   data() {
     return {
+      activeName: "first",
       tableData: [
-        {
-          date: "2016-05-02",
-          inOrOut: "收入",
-          number: "+5",
-          way: "支付宝"
-        },
-        {
-          date: "2016-05-04",
-          inOrOut: "支出",
-          number: "-15",
-          way: "支付宝"
-        },
-        {
-          date: "2016-05-01",
-          inOrOut: "收入",
-          number: "+25",
-          way: "微信"
-        },
-        {
-          date: "2016-05-03",
-          inOrOut: "支出",
-          number: "-25",
-          way: "微信"
-        }
-      ]
+        { id: 1, fullbtn: "空", orderbtn: "预定"},
+        { id: 2, fullbtn: "空", orderbtn: "预定"},
+        { id: 3, fullbtn: "空", orderbtn: "预定"},
+        { id: 4, fullbtn: "空", orderbtn: "预定"},
+        { id: 5, fullbtn: "空", orderbtn: "预定"},
+        { id: 6, fullbtn: "空", orderbtn: "预定"},
+        { id: 7, fullbtn: "空", orderbtn: "预定"},
+        { id: 8, fullbtn: "空", orderbtn: "预定"},
+        ],
+      formData: [
+        { id: 1, fullbtn: "空", orderbtn: "预定"},
+        { id: 2, fullbtn: "空", orderbtn: "预定"},
+        { id: 3, fullbtn: "空", orderbtn: "预定"},
+        { id: 4, fullbtn: "空", orderbtn: "预定"},
+        { id: 5, fullbtn: "空", orderbtn: "预定"},
+        { id: 6, fullbtn: "空", orderbtn: "预定"},
+        ],
+      bigData: [
+        { id: 1, fullbtn: "空", orderbtn: "预定"},
+        { id: 2, fullbtn: "空", orderbtn: "预定"},
+        { id: 3, fullbtn: "空", orderbtn: "预定"},
+        { id: 4, fullbtn: "空", orderbtn: "预定"}
+        ],
     };
   },
   methods: {
-    filterTag(value, row) {
-      return row.inOrOut === value;
+    handleClick(tab, event) {
+      console.log(tab, event);
     },
-    filterWay(value, row) {
-      return row.way === value;
+    // 小间
+    full(index){
+      if(this.tableData[index].fullbtn === "空"){
+        this.tableData[index].fullbtn = "已满";
+        this.tableData[index].orderbtn = "已满";
+      }
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    order(index){
+      if(this.tableData[index].orderbtn === "预定"){
+        this.tableData[index].orderbtn = "已预定";
+        this.tableData[index].fullbtn = "已预定";
+      }
     },
-    handleDelete(index, row) {
-      console.log(index, row);
-    }
+    clean(index){
+      this.tableData[index].orderbtn="预定";
+      this.tableData[index].fullbtn = "空";
+    },
+    // 中间
+    formfull(index){
+      if(this.formData[index].fullbtn === "空"){
+        this.formData[index].fullbtn = "已满";
+        this.formData[index].orderbtn = "已满";
+      }
+    },
+    formorder(index){
+      if(this.formData[index].orderbtn === "预定"){
+        this.formData[index].orderbtn = "已预定";
+        this.formData[index].fullbtn = "已预定";
+      }
+    },
+    formclean(index){
+      this.formData[index].orderbtn="预定";
+      this.formData[index].fullbtn = "空";
+    },
+    // 大间
+    bigfull(index){
+      if(this.bigData[index].fullbtn === "空"){
+        this.bigData[index].fullbtn = "已满";
+        this.bigData[index].orderbtn = "已满";
+      }
+    },
+    bigorder(index){
+      if(this.bigData[index].orderbtn === "预定"){
+        this.bigData[index].orderbtn = "已预定";
+        this.bigData[index].fullbtn = "已预定";
+      }
+    },
+    bigclean(index){
+      this.bigData[index].orderbtn="预定";
+      this.bigData[index].fullbtn = "空";
+    },
   }
 };
 </script>
+<style scoped>
+/* 面包屑头部导航栏 */
+.el-tabs {
+  width: 70%;
+  height: 100%;
+  min-height: 678px;
+  margin: 0 auto;
+  font-family: STKaiti;
+}
+/* 小间 */
+.small-rooms {
+  width: 100%;
+  height: 100%;
+  min-height: 610px;
+  overflow: hidden;
+}
+/* 第一间房间 */
+.first-sr,
+.second-sr,
+.third-sr{
+  height: 290px;
+  margin: 10px;
+  display: inline-block;
+  border-radius: 15px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+.first-sr{
+  width: 23%;
+}
+.second-sr{
+  width: 31%;
+}
+.third-sr{
+  width: 48%;
+}
+.first-sr:hover,
+.second-sr:hover,
+.third-sr:hover {
+  background-color: #d9cd9042;
+}
+/* 序号 */
+.serial {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  border: 2px dashed tomato;
+  border-radius: 50%;
+  margin: 10px;
+  line-height: 25px;
+  text-align: center;
+}
+/* 更新键 */
+.updata{
+  display: inline-block;
+  right: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+/* 文字部分 */
+.content {
+  width: 200px;
+  height: 90px;
+  font-size: 18px;
+  border: 1px solid #fff;
+  margin: 0 auto;
+}
+.content ul {
+  margin-top: 15px;
+}
+li {
+  list-style: none;
+  text-decoration: none;
+  display: block;
+  line-height: 25px;
+  text-align: center;
+  margin: 5px;
+}
+/* 计时器 */
+.time {
+  width: 200px;
+  height: 72px;
+  margin: 10px auto;
+  padding: 5px;
+  line-height: 25px;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+/* 按钮 */
+.first-sr .btn .el-button,
+.second-sr .btn .el-button,
+.third-sr .btn .el-button{
+  display: inline-block;
+  margin-top: 15px;
+}
+.first-sr .btn .el-button{
+  margin-left: 38px;
+}
+.second-sr .btn .el-button{
+  margin-left: 65px;
+}
+.third-sr .btn .el-button{
+  margin-left: 130px;
+}
+</style>

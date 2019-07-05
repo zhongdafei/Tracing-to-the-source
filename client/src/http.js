@@ -21,7 +21,7 @@ axios.interceptors.request.use(config => {
     if (config.method != "get") {
         config.data = qs.stringify(config.data);
     }
-    config.baseURL = "http://119.23.243.252:8080";
+    config.baseURL = "http://47.111.134.50:8200";
     if (localStorage.eleToken) {
         // 设置统一的请求头header
         config.headers.Authorization = localStorage.eleToken;

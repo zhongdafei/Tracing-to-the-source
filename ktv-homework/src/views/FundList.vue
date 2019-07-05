@@ -1,7 +1,7 @@
 <template>
   <div class="fundlist">
     <div class="w">
-      <el-table ref="filterTable" :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%">
       <el-table-column label="日期" width="180" align="center">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
@@ -36,7 +36,7 @@
         prop="way"
         label="支付方法"
         width="100"
-        :filters="[{ text: '支付宝', value: '支付宝' }, { text: '微信', value: '微信' }]"
+        :filters="[{ text: '支付宝', value: '支付宝' }, { text: '微信', value: '微 信' }]"
         :filter-method="filterWay"
         filter-placement="bottom-end"
       >
@@ -100,6 +100,7 @@ export default {
     },
     // 支付方式标签
     filterWay(value, row) {
+      console.log(value, row);
       return row.way === value;
     },
     // 编辑方法
