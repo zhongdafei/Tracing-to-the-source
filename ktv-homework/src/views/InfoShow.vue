@@ -62,6 +62,7 @@
   </div>
 </template>
 <script>
+import { parse } from 'path';
 export default {
   data() {
     var checkAge = (rule, value, callback) => {
@@ -105,7 +106,7 @@ export default {
         return callback(new Error("手机号不能为空"));
       } else {
         const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
-        console.log(reg.test(value));
+        // console.log(reg.test(value));
         if (reg.test(value)) {
           callback();
         } else {
@@ -140,9 +141,24 @@ export default {
       }
     };
   },
+  beforeMount(){
+    this.createToken();
+  },
   methods: {
+    createToken(){
+      // localStorage.setItem("info",stringify(this.ruleForm1));
+    },
     submitForm(formName) {
-      this.ruleForm1 = this.ruleForm;
+      if(!this.ruleForm.name==""){
+      localStorage.setItem("info",JSON.stringify(this.ruleForm));
+     if(localStorage.info){
+       this.ruleForm1=JSON.parse(localStorage.info);
+     }else{
+       this.ruleForm=this.ruleForm1
+     }
+    //  this.ruleForm=[];
+     }
+    //  this.ruleForm=[];
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

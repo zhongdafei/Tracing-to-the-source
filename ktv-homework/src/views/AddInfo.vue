@@ -23,6 +23,12 @@
               <!-- 编辑弹框 -->
               <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
                 <el-form :model="form">
+                   <el-form-item label="姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="性别" :label-width="formLabelWidth">
+                    <el-input v-model="form.sex" autocomplete="off"></el-input>
+                  </el-form-item>
                   <el-form-item label="年龄" :label-width="formLabelWidth">
                     <el-input v-model="form.age" autocomplete="off"></el-input>
                   </el-form-item>
@@ -88,45 +94,46 @@
   </div>
 </template>
 <script>
+import { constants } from 'crypto';
 export default {
   data() {
     return {
       tableData: [
         {
-          name: "王小虎",
+          name: "王二小",
           sex: "男",
           age: "18",
-          tel: 18870772880,
-          QQ: 1903044057,
+          tel: 18870772580,
+          QQ: 3044057,
           money: 3000,
           adr: "上海市普陀区金沙江路 1518 弄"
         },
         {
-          name: "王小虎",
+          name: "李晓明",
           sex: "女",
           age: "26",
-          tel: 18870772880,
-          QQ: 1903044057,
+          tel: 18870662880,
+          QQ: 9044057,
           money: 3000,
-          adr: "上海市普陀区金沙江路 1518 弄"
+          adr: "江西理工大学应用科学学院"
         },
         {
-          name: "王小虎",
+          name: "上官大婷",
           sex: "女",
-          age: "30",
-          tel: 18870772880,
-          QQ: 1903044057,
+          age: "20",
+          tel: 18870772369,
+          QQ: 1903557,
           money: 3000,
-          adr: "上海市普陀区金沙江路 1518 弄"
+          adr: "江西省上饶市鄱阳县"
         },
         {
-          name: "王小虎",
+          name: "黎明",
           sex: "男",
-          age: "18",
+          age: "40",
           tel: 18870772880,
           QQ: 1903044057,
           money: 3000,
-          adr: "上海市普陀区金沙江路 1518 弄"
+          adr: "北京市普陀区金沙江路 1518 弄"
         }
       ],
       dialogFormVisible: false,
@@ -154,16 +161,16 @@ export default {
   methods: {
     handleEdit(index, row) {
       this.dialogFormVisible = true;
-      console.log(index, row);
+      this.tableData[index]=this.form;
+      // console.log(index, row);
     },
     handleDelete(index, row) {
       this.tableData.splice(index, 1);
-      console.log(index, row);
+      // console.log(index, row);
     },
     // 修改信息提交
     submit(index, row) {
       this.dialogFormVisible = false;
-      console.log(index, row);
     },
     // 添加信息提交
     submit1(){

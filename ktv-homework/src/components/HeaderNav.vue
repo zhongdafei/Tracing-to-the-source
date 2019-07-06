@@ -37,8 +37,8 @@
           <div class="welcome">
             <p class="name comenane">欢迎</p>
             <p class="name avatarname">
-              <!-- {{userName}} -->
-              米斯特务
+              {{userName}}
+              <!-- 米斯特务 -->
             </p>
           </div>
           <span class="username">
@@ -82,13 +82,11 @@
   </div>
 </template>
 <script>
-import { constants } from "crypto";
-
 export default {
   name: "head-nav",
   data() {
     return {
-      userName: "",
+      userName: "胡英俊",
       restaurants: [],
       state: "",
       labelPosition: "top"
@@ -99,7 +97,7 @@ export default {
       return this.$store.getters.user;
     }
   },
-  beforeMount() {
+  Mount() {
     this.getUserName();
   },
   methods: {
@@ -174,8 +172,15 @@ export default {
       // 跳转
       this.$router.push("/login");
     },
+   
 
-    getUserName() {}
+    getUserName(){
+      if(localStorage.info){
+        var name = JSON.parse(localStorage.info).name;
+        this.userName = name;
+      }
+    }
+   
   }
 };
 </script>
