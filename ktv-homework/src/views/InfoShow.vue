@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-import { parse } from 'path';
+import { parse } from "path";
 export default {
   data() {
     var checkAge = (rule, value, callback) => {
@@ -141,24 +141,24 @@ export default {
       }
     };
   },
-  beforeMount(){
+  beforeMount() {
     this.createToken();
   },
   methods: {
-    createToken(){
+    createToken() {
       // localStorage.setItem("info",stringify(this.ruleForm1));
+      this.ruleForm1.name = JSON.parse(localStorage.userInfo).name;
+      this.ruleForm1.ohone = JSON.parse(localStorage.userInfo).phone;
     },
     submitForm(formName) {
-      if(!this.ruleForm.name==""){
-      localStorage.setItem("info",JSON.stringify(this.ruleForm));
-     if(localStorage.info){
-       this.ruleForm1=JSON.parse(localStorage.info);
-     }else{
-       this.ruleForm=this.ruleForm1
-     }
-    //  this.ruleForm=[];
-     }
-    //  this.ruleForm=[];
+      if (!this.ruleForm.name == "") {
+        localStorage.setItem("info", JSON.stringify(this.ruleForm));
+        if (localStorage.info) {
+          this.ruleForm1 = JSON.parse(localStorage.info);
+        } else {
+          this.ruleForm = this.ruleForm1;
+        }
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -236,12 +236,12 @@ h3 {
   text-align: center;
   color: seagreen;
 }
-.center p{
-    /* display: inline-block; */
-    font-size: 24px;
-    font-weight: 700;
-    font-family: STKaiti;
-    margin-top: 50px;
+.center p {
+  /* display: inline-block; */
+  font-size: 24px;
+  font-weight: 700;
+  font-family: STKaiti;
+  margin-top: 50px;
 }
 .qiu,
 .qiu1 {
@@ -256,12 +256,12 @@ h3 {
   animation: myqiu 5s linear infinite alternate;
   background-color: rgb(73, 73, 133);
 }
-.qiu1{
- animation: myqiu1 5s linear infinite alternate;
+.qiu1 {
+  animation: myqiu1 5s linear infinite alternate;
   background-color: rgb(73, 73, 133);
 }
 @keyframes myqiu {
- 0% {
+  0% {
     top: 0px;
     left: 80px;
   }

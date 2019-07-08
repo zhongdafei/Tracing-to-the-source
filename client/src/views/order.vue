@@ -97,7 +97,7 @@ export default {
     changeTime(obj) {
       let date = new Date(obj);
       let y = date.getFullYear();
-      let m = date.getMonth();
+      let m = date.getMonth()+1;
       let d = date.getDate();
       let h = date.getHours();
       let f =

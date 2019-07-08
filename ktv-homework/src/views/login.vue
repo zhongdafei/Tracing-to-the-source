@@ -1,39 +1,38 @@
 <template>
-<div class="zhanwei">
-  <div class="login">
-    <section class="form_container">
-      <div class="manage_tip">
-        <span class="title">ktv管理系统</span>
-      </div>
-
-      <el-form
-        :model="loginUser"
-        :rules="rules"
-        class="loginForm"
-        ref="loginForm"
-        label-width="80px"
-      >
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="loginUser.name" placeholder="请输入用户名"></el-input>
-        </el-form-item>
-
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="loginUser.password" placeholder="请输入密码" type="password"></el-input>
-        </el-form-item>
-
-       
-        <el-form-item>
-          <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')">登入</el-button>
-        </el-form-item>
-        <div class="tiparea">
-          <p>
-            还没有账号？现在
-            <router-link to="/register">注册</router-link>
-          </p>
+  <div class="zhanwei">
+    <div class="login">
+      <section class="form_container">
+        <div class="manage_tip">
+          <span class="title">ktv管理系统</span>
         </div>
-      </el-form>
-    </section>
-  </div>
+
+        <el-form
+          :model="loginUser"
+          :rules="rules"
+          class="loginForm"
+          ref="loginForm"
+          label-width="80px"
+        >
+          <el-form-item label="用户名" prop="name">
+            <el-input v-model="loginUser.name" placeholder="请输入用户名"></el-input>
+          </el-form-item>
+
+          <el-form-item label="密码" prop="password">
+            <el-input v-model="loginUser.password" placeholder="请输入密码" type="password"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')">登入</el-button>
+          </el-form-item>
+          <div class="tiparea">
+            <p>
+              还没有账号？现在
+              <router-link to="/register">注册</router-link>
+            </p>
+          </div>
+        </el-form>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -70,29 +69,24 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$axios.post("/api/account", this.loginUser).then(res => {
-            console.log(res)
-            if (res.data.code > 300) {
-              this.$message({
-                message: res.data.msg,
-                type: "error"
-              });
-            } else {
-              const { token } = res.data.data;
-              // 存储到ls
-              localStorage.setItem("eleToken", token);
-              this.$router.push("/index");
-            }
-            //   console.log(res)
-            // token
+          console.log(JSON.parse(localStorage.userInfo).name);
 
-            // 解析token
-            // const decode=jwt_decode(token);
-            // console.log(decode);
-            // token存储到vuex中
-            // this.$store.dispatch("setAuthenticated",!this.isEmpty(decode));
-            // this.$store.dispatch("setUser",decode);
-          });
+          if (
+            JSON.parse(localStorage.userInfo).name == this.loginUser.name &&
+            JSON.parse(localStorage.userInfo).password ==
+              this.loginUser.password
+          ) {
+            this.$message({
+              message: "登入成功",
+              type: "success"
+            });
+            this.$router.push("/index");
+          } else {
+            this.$message({
+              message: "用户名 / 密码  错误",
+              type: "error"
+            });
+          }
         }
       });
     },
@@ -109,7 +103,7 @@ export default {
 </script>
 
 <style scoped>
-.zhanwei{
+.zhanwei {
   width: 100%;
   height: 100%;
 }

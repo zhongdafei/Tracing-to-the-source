@@ -64,10 +64,10 @@
                   <i class="fa fa-jpy"></i>
                   资金流水
                 </el-dropdown-item>
-                <el-dropdown-item command="demolist">
+                <!-- <el-dropdown-item command="demolist">
                   <i class="fa fa-jpy"></i>
                   首页
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item command="logout">
                   <i class="fa fa-reply-all"></i>
                   退出
@@ -82,11 +82,12 @@
   </div>
 </template>
 <script>
+import { constants } from 'crypto';
 export default {
   name: "head-nav",
   data() {
     return {
-      userName: "胡英俊",
+      userName:'',
       restaurants: [],
       state: "",
       labelPosition: "top"
@@ -97,7 +98,10 @@ export default {
       return this.$store.getters.user;
     }
   },
-  Mount() {
+  beforeMount() {
+    this.getUserName();
+  },
+  beforeUpdate(){
     this.getUserName();
   },
   methods: {
@@ -138,18 +142,18 @@ export default {
         case "moneylist":
           this.MoneyList();
           break;
-        case "demolist":
-          this.demoList();
-          break;
+        // case "demolist":
+        //   this.demoList();
+        //   break;
         退出
         case "logout":
           this.logout();
           break;
       }
     },
-    demoList(){
-      this.$router.push("./fundlister");
-    },
+    // demoList(){
+    //   this.$router.push("./fundlister");
+    // },
     MoneyList(){
       this.$router.push("./fundlist");
     },
@@ -175,8 +179,15 @@ export default {
    
 
     getUserName(){
+      if(localStorage.userInfo){
+        var name = JSON.parse(localStorage.userInfo).name;
+        this.userName = name;
+      }
+    },
+    update(){
       if(localStorage.info){
         var name = JSON.parse(localStorage.info).name;
+        console.log(JSON.parse(localStorage.info).name);
         this.userName = name;
       }
     }

@@ -138,7 +138,7 @@ export default {
           this.userAddr = res.data.data.addr;
           let date = new Date(res.data.data.updateTime);
           let y = date.getFullYear();
-          let m = date.getMonth();
+          let m = date.getMonth()+1;
           let d = date.getDate();
           let h = date.getHours();
           let f =

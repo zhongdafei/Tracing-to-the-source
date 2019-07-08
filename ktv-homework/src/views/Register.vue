@@ -17,7 +17,7 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="registerUser.email" placeholder="请输入邮箱"></el-input>
         </el-form-item>
-         <el-form-item label="电话" prop="phone">
+        <el-form-item label="电话" prop="phone">
           <el-input v-model="registerUser.phone" placeholder="请输入电话"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -26,7 +26,7 @@
         <el-form-item label="确认密码" prop="password2">
           <el-input v-model="registerUser.password2" placeholder="请确认密码" type="password"></el-input>
         </el-form-item>
-        
+
         <el-form-item>
           <el-button type="primary" class="submit_btn" @click="submitForm('registerForm')">注 册</el-button>
         </el-form-item>
@@ -39,19 +39,19 @@
 export default {
   name: "register",
   data() {
-     var checkPhone = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('手机号不能为空'));
+    var checkPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("手机号不能为空"));
+      } else {
+        const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+        // console.log(reg.test(value));
+        if (reg.test(value)) {
+          callback();
         } else {
-          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-          // console.log(reg.test(value));
-          if (reg.test(value)) {
-            callback();
-          } else {
-            return callback(new Error('请输入正确的手机号'));
-          }
+          return callback(new Error("请输入正确的手机号"));
         }
-      };
+      }
+    };
     var validatePass2 = (rule, value, callback) => {
       if (value !== this.registerUser.password) {
         callback(new Error("两次输入密码不一致!"));
@@ -63,7 +63,7 @@ export default {
       registerUser: {
         name: "",
         email: "",
-        phone:"",
+        phone: "",
         password: "",
         password2: "",
         identity: ""
@@ -81,9 +81,7 @@ export default {
             trigger: "blur"
           }
         ],
-        phone:[
-          {validator: checkPhone, trigger: 'blur'},
-        ],
+        phone: [{ validator: checkPhone, trigger: "blur" }],
         password: [
           { required: true, message: "密码不能为空", trigger: "blur" },
           { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
@@ -104,24 +102,9 @@ export default {
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$axios.post("/api/admin", this.registerUser).then(res => {
-            // 注册成功
-            console.log(res.data);
-            if (res.data.code > 300) {
-              this.$message({
-                message: res.data.msg,
-                type: "error"
-              });
-            } else {
-              this.$message({
-                message: res.data.msg,
-                type: "success"
-              });
-              this.$router.push("/login");
-            }
-          });
-        }
+        localStorage.setItem('userInfo',JSON.stringify(this.registerUser));
+        console.log(localStorage.userInfo);
+        this.$router.push("/login");
       });
     }
   }
@@ -147,11 +130,11 @@ export default {
   border-radius: 5px;
   text-align: center;
 }
-.manage_tip{
+.manage_tip {
   width: 320px;
   height: 50px;
   line-height: 50px;
-  margin:10px auto;
+  margin: 10px auto;
 }
 /* .registerForm[data-v-63ae9146] {
   margin:20px auto!important;

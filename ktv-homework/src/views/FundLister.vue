@@ -127,6 +127,7 @@ export default {
   components: { Timer },
   data() {
     return {
+      items:this.$store.getters.items,
       activeName: "first",
       tableData: [
         { id: 1, fullbtn: "空", orderbtn: "预定"},

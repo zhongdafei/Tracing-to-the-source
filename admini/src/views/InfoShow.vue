@@ -131,7 +131,7 @@ export default {
           this.userAdminId = res.data.data.adminId;
           const data = new Date(res.data.data.createTime);
           const y = data.getFullYear();
-          const m = data.getMonth();
+          const m = data.getMonth()+1;
           const d = data.getDate();
           const h = data.getHours();
           const f =

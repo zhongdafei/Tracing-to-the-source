@@ -29,16 +29,16 @@ export const store = new Vuex.Store({
     addItem(state, item) {
       state.items.push(item);
     },
-    buynow(state,item){
-      state.xiadans.push(item)
-    }
+    // buynow(state,item){
+    //   state.xiadans.push(item)
+    // }
   },
   actions: {//异步操作,在组件中使用的是$store.dispath('',params)
     addItem(context, item) {
       context.commit('addItem', item);
     },
-    buynow(context,item){
-      context.commit('buynow',item);
-    }
+    // buynow(context,item){
+    //   context.commit('buynow',item);
+    // }
   }
 });

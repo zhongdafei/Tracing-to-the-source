@@ -2,7 +2,7 @@
   <div class="addinfo">
     <div class="infolist">
       <div class="slip">
-      <p>员工信息表</p>
+        <p>员工信息表</p>
       </div>
     </div>
     <div class="w">
@@ -20,10 +20,10 @@
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 
-              <!-- 编辑弹框 -->
+              <!-- 重新编辑员工信息编辑弹框   form-->
               <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
                 <el-form :model="form">
-                   <el-form-item label="姓名" :label-width="formLabelWidth">
+                  <el-form-item label="姓名" :label-width="formLabelWidth">
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="性别" :label-width="formLabelWidth">
@@ -45,12 +45,12 @@
                     <el-input v-model="form.money" autocomplete="off"></el-input>
                   </el-form-item>
                 </el-form>
-                <div slot="footer" class="dialog-footer">
+                <div>
+                  <el-button type="primary" @click="submit(scope.row)">确 定</el-button>
                   <el-button @click="dialogFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="submit(scope.$index, scope.row)">确 定</el-button>
                 </div>
               </el-dialog>
-              
+
               <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
@@ -60,44 +60,45 @@
     <div class="add">
       <p>添加员工</p>
       <el-button icon="el-icon-plus" circle @click="dialogInfoFormVisible=true"></el-button>
-       <!-- 编辑弹框 -->
-              <el-dialog title="添加员工信息" :visible.sync="dialogInfoFormVisible" append-to-body>
-                <el-form >
-                  <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="form1.name" autocomplete="on"></el-input>
-                  </el-form-item>
-                  <el-form-item label="性别" :label-width="formLabelWidth">
-                    <el-input v-model="form1.sex" autocomplete="on"></el-input>
-                  </el-form-item>
-                  <el-form-item label="年龄" :label-width="formLabelWidth">
-                    <el-input v-model="form1.age" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="电话" :label-width="formLabelWidth">
-                    <el-input v-model="form1.tel" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="QQ号" :label-width="formLabelWidth">
-                    <el-input v-model="form1.QQ" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="地址" :label-width="formLabelWidth">
-                    <el-input v-model="form1.adr" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="月工资" :label-width="formLabelWidth">
-                    <el-input v-model="form1.money" autocomplete="off"></el-input>
-                  </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="dialogFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="submit1()">确 定</el-button>
-                </div>
-              </el-dialog>
+      <!-- 添加员工编辑弹框   form1-->
+      <el-dialog title="添加员工信息" :visible.sync="dialogInfoFormVisible" append-to-body>
+        <el-form>
+          <el-form-item label="姓名" :label-width="formLabelWidth">
+            <el-input v-model="form1.name" autocomplete="on"></el-input>
+          </el-form-item>
+          <el-form-item label="性别" :label-width="formLabelWidth">
+            <el-input v-model="form1.sex" autocomplete="on"></el-input>
+          </el-form-item>
+          <el-form-item label="年龄" :label-width="formLabelWidth">
+            <el-input v-model="form1.age" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="电话" :label-width="formLabelWidth">
+            <el-input v-model="form1.tel" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="QQ号" :label-width="formLabelWidth">
+            <el-input v-model="form1.QQ" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="地址" :label-width="formLabelWidth">
+            <el-input v-model="form1.adr" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="月工资" :label-width="formLabelWidth">
+            <el-input v-model="form1.money" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="submit1()">确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 <script>
-import { constants } from 'crypto';
+import { constants } from "crypto";
 export default {
   data() {
     return {
+      index: "",
       tableData: [
         {
           name: "王二小",
@@ -139,6 +140,8 @@ export default {
       dialogFormVisible: false,
       dialogInfoFormVisible: false,
       form: {
+        name: "",
+        sex: "",
         age: "",
         tel: "",
         QQ: "",
@@ -147,13 +150,13 @@ export default {
         type: []
       },
       form1: {
-        name:"",
-        sex:"",
+        name: "",
+        sex: "",
         age: "",
         tel: "",
         QQ: "",
         adr: "",
-        money: "",
+        money: ""
       },
       formLabelWidth: "60px"
     };
@@ -161,22 +164,34 @@ export default {
   methods: {
     handleEdit(index, row) {
       this.dialogFormVisible = true;
-      this.tableData[index]=this.form;
       // console.log(index, row);
+      this.index = index;
     },
     handleDelete(index, row) {
       this.tableData.splice(index, 1);
       // console.log(index, row);
     },
     // 修改信息提交
-    submit(index, row) {
+    submit(row) {
+      // console.log(row, this.index,this.tableData);
       this.dialogFormVisible = false;
+      if (!this.form.name == "") {
+        this.tableData[this.index].name = this.form.name;
+        this.tableData[this.index].sex = this.form.sex;
+        this.tableData[this.index].age = this.form.age;
+        this.tableData[this.index].tel = this.form.tel;
+        this.tableData[this.index].QQ = this.form.QQ;
+        this.tableData[this.index].adr = this.form.adr;
+        this.tableData[this.index].money = this.form.money;
+      }
+      this.form.name = this.form.sex = this.form.age = this.form.tel = this.form.adr = this.form.money = this.form.QQ =
+        "";
     },
     // 添加信息提交
-    submit1(){
-      this.dialogInfoFormVisible=false;
+    submit1() {
+      this.dialogInfoFormVisible = false;
       this.tableData.push(this.form1);
-      this.form1=[];
+      this.form1 = [];
     }
   }
 };
@@ -198,7 +213,7 @@ export default {
   overflow: hidden;
   margin: 40px auto;
 }
-.add{
+.add {
   width: 150px;
   height: 150px;
   background-color: #b1b479;
@@ -209,16 +224,16 @@ export default {
   animation: myadd 10s linear infinite alternate;
 }
 @keyframes myadd {
-  0%{
+  0% {
     top: 15%;
     right: 5%;
   }
-  100%{
+  100% {
     top: 75%;
     right: 5%;
   }
 }
-.add p{
+.add p {
   display: block;
   width: 150px;
   height: 70px;
@@ -228,10 +243,10 @@ export default {
   text-align: center;
   font-family: STKaiti;
 }
-.add .el-button{
+.add .el-button {
   margin: 0% 36%;
 }
-.infolist{
+.infolist {
   position: relative;
   float: left;
   top: 200px;
@@ -241,12 +256,13 @@ export default {
   background-color: #b1b479;
   /* display:inline-block; */
   border-radius: 50px;
-  transition: 1s ease-in-out ;
+  transition: 1s ease-in-out;
 }
-.infolist:hover,.infolist p:hover{
+.infolist:hover,
+.infolist p:hover {
   transform: rotate(360deg);
 }
-.slip{
+.slip {
   width: 24px;
   height: 300px;
   float: left;
@@ -254,12 +270,12 @@ export default {
   left: 40px;
   /* background-color: pink; */
 }
-.infolist p{
+.infolist p {
   position: absolute;
-  display:inline-block; 
+  display: inline-block;
   font-size: 24px;
   font-family: STKaiti;
   margin-top: 70px;
-  color:forestgreen;
+  color: forestgreen;
 }
 </style>

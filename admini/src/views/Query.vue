@@ -49,8 +49,8 @@
       <div class="order">
         <template>
           <el-table :data="doneData" style="width: 100%">
-            <el-table-column prop="orderId" label="订单号" align="center" width="300"></el-table-column>
-            <el-table-column prop="producibleId" label="产品ID" align="center" width="300"></el-table-column>
+            <el-table-column prop="orderId" label="订单号" align="center" width="280"></el-table-column>
+            <el-table-column prop="producibleId" label="产品ID" align="center" width="280"></el-table-column>
             <el-table-column prop="number" label="数量" align="center" width="80"></el-table-column>
             <el-table-column prop="diameter" label="直径" align="center" width="80"></el-table-column>
             <el-table-column prop="length" label="长度" align="center" width="80"></el-table-column>
@@ -73,8 +73,8 @@
       <div class="order">
         <template>
           <el-table :data="refuseData" style="width: 100%">
-            <el-table-column prop="orderId" label="订单号" align="center" width="300"></el-table-column>
-            <el-table-column prop="producibleId" label="产品ID" align="center" width="300"></el-table-column>
+            <el-table-column prop="orderId" label="订单号" align="center" width="280"></el-table-column>
+            <el-table-column prop="producibleId" label="产品ID" align="center" width="280"></el-table-column>
             <el-table-column prop="number" label="数量" align="center" width="80"></el-table-column>
             <el-table-column prop="diameter" label="直径" align="center" width="80"></el-table-column>
             <el-table-column prop="length" label="长度" align="center" width="80"></el-table-column>
@@ -110,7 +110,7 @@ export default {
     changeTime(obj) {
       let date = new Date(obj);
       let y = date.getFullYear();
-      let m = date.getMonth();
+      let m = date.getMonth()+1;
       let d = date.getDate();
       let h = date.getHours();
       let f =
@@ -259,4 +259,5 @@ export default {
 .el-table .success-row {
   background: #f0f9eb;
 }
+
 </style>

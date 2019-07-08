@@ -8,7 +8,7 @@
         </span>
       </el-col>
 
-      <el-col :span="3" class="user">
+      <el-col :span="4" class="user">
         <div class="userinfo">
           <img src="../assets/頭像.jpeg" class="avatar" alt />
           <div class="welcome">

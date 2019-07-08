@@ -11,6 +11,7 @@ import AddGoods from './views/AddGoods'
 import DoneUpGoods from './views/DoneUpGoods'
 import Query from './views/Query'
 import QueryAllInfo from './views/QueryAllInfo'
+import Task from "./views/Task";
 
 Vue.use(Router)
 
@@ -75,6 +76,11 @@ const router = new Router({
           path: '/queryallinfo',
           name: 'queryallinfo',
           component: QueryAllInfo
+        },
+        {
+          path: '/task',
+          name: 'task',
+          component: Task
         }
       ]
     },
