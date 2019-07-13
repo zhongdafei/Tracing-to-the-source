@@ -8,7 +8,7 @@
         </span>
       </el-col>
 
-      <el-col :span="4" class="user">
+      <el-col :span="3" class="user">
         <div class="userinfo">
           <img src="../assets/頭像.jpeg" class="avatar" alt />
           <div class="welcome">
@@ -180,5 +180,14 @@ a {
 }
 .el-dropdown {
   color: #fff;
+}
+.el-col-3{
+  width: 15% ;
+}
+.logo-container{
+  height: 60px;
+}
+.title a{
+  height: 60px;
 }
 </style>
